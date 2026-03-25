@@ -1,0 +1,433 @@
+annotations:
+  - border_color: '#808080FF'
+    border_radius: 0
+    border_style: ''
+    color: '#F1F3FF'
+    rotation: 0
+    thickness: 1
+    type: rectangle
+    x1: -480.0
+    y1: 0.0
+    x2: 280.0
+    y2: 160.0
+    z_index: 0
+  - border_color: '#00000000'
+    border_style: ''
+    color: '#000AFF'
+    rotation: 0
+    text_bold: true
+    text_content: |-
+      VLAN 10
+      192.168.10.x/24
+    text_font: monospace
+    text_italic: false
+    text_size: 12
+    text_unit: pt
+    thickness: 1
+    type: text
+    x1: -414.0
+    y1: 109.0
+    z_index: 1
+  - border_color: '#808080FF'
+    border_radius: 0
+    border_style: ''
+    color: '#F5DCDC'
+    rotation: 0
+    thickness: 1
+    type: rectangle
+    x1: -200.0
+    y1: 0.0
+    x2: 280.0
+    y2: 160.0
+    z_index: 0
+  - border_color: '#00000000'
+    border_style: ''
+    color: '#FF0000'
+    rotation: 0
+    text_bold: true
+    text_content: |-
+      VLAN 20
+      192.168.20.x/24
+    text_font: monospace
+    text_italic: false
+    text_size: 12
+    text_unit: pt
+    thickness: 1
+    type: text
+    x1: -147.0
+    y1: 107.0
+    z_index: 1
+smart_annotations: []
+nodes:
+  - boot_disk_size: null
+    configuration:
+      - name: ios_config.txt
+        content: |-
+          Building configuration...
+
+          Current configuration : 1119 bytes
+          !
+          ! Last configuration change at 13:42:52 UTC Tue Jun 20 2023
+          !
+          version 15.2
+          service timestamps debug datetime msec
+          service timestamps log datetime msec
+          no service password-encryption
+          service compress-config
+          !
+          hostname SW1
+          !
+          boot-start-marker
+          boot-end-marker
+          !
+          !
+          no logging console
+          !
+          no aaa new-model
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          ip cef
+          no ipv6 cef
+          !
+          !
+          !
+          spanning-tree mode pvst
+          spanning-tree extend system-id
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          interface GigabitEthernet0/0
+           negotiation auto
+          !
+          interface GigabitEthernet0/1
+           negotiation auto
+          !
+          interface GigabitEthernet0/2
+           negotiation auto
+          !
+          ip forward-protocol nd
+          !
+          ip http server
+          ip http secure-server
+          !
+          ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+          ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+          !
+          !
+          !
+          !
+          !
+          !
+          control-plane
+          !
+          !
+          line con 0
+           exec-timeout 0 0
+           privilege level 15
+           logging synchronous
+           transport output none
+          line aux 0
+          line vty 0 4
+           exec-timeout 0 0
+           logging synchronous
+           login local
+           transport input ssh
+           transport output none
+          line vty 5 15
+           logging synchronous
+           login local
+           transport input ssh
+           transport output none
+          !
+          !
+          end
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n0
+    image_definition: null
+    label: SW1
+    node_definition: iosvl2
+    parameters: {}
+    ram: null
+    tags: []
+    x: -200
+    y: 40
+    interfaces:
+      - id: i0
+        label: Loopback0
+        mac_address: null
+        type: loopback
+      - id: i1
+        label: GigabitEthernet0/0
+        mac_address: null
+        type: physical
+        slot: 0
+      - id: i2
+        label: GigabitEthernet0/1
+        mac_address: null
+        type: physical
+        slot: 1
+      - id: i3
+        label: GigabitEthernet0/2
+        mac_address: null
+        type: physical
+        slot: 2
+  - boot_disk_size: null
+    configuration:
+      - name: node.cfg
+        content: |-
+          # this is a shell script which will be sourced at boot
+          hostname PC-1
+          # configurable user account
+          USERNAME=cisco
+          PASSWORD=cisco
+          ip addr add 192.168.10.10/24 dev eth0
+          ip route add default via 192.168.10.1
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n1
+    image_definition: null
+    label: PC-1
+    node_definition: alpine
+    parameters: {}
+    ram: null
+    tags: []
+    x: -360
+    y: 40
+    interfaces:
+      - id: i0
+        label: eth0
+        mac_address: null
+        type: physical
+        slot: 0
+  - boot_disk_size: null
+    configuration:
+      - name: node.cfg
+        content: |-
+          # this is a shell script which will be sourced at boot
+          hostname PC-2
+          # configurable user account
+          USERNAME=cisco
+          PASSWORD=cisco
+          ip addr add 192.168.20.10/24 dev eth0
+          ip route add default via 192.168.20.1
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n2
+    image_definition: null
+    label: PC-2
+    node_definition: alpine
+    parameters: {}
+    ram: null
+    tags: []
+    x: -40
+    y: 40
+    interfaces:
+      - id: i0
+        label: eth0
+        mac_address: null
+        type: physical
+        slot: 0
+links:
+  - id: l0
+    n1: n0
+    n2: n1
+    i1: i2
+    i2: i0
+    conditioning: {}
+    label: SW1-GigabitEthernet0/1<->PC-1-eth0
+  - id: l1
+    n1: n0
+    n2: n2
+    i1: i3
+    i2: i0
+    conditioning: {}
+    label: SW1-GigabitEthernet0/2<->PC-2-eth0
+lab:
+  description: ''
+  notes: |-
+    # SVI - Switched Virtual Interfaces (IOS)
+
+    <br>
+
+    ## Tasks
+
+    >1. Create VLAN 10 on `SW1`
+    >2. Assign `PC-1` to VLAN 10
+    >3. Create VLAN 20 on `SW1`
+    >4. Assign `PC-2` to VLAN 20
+    >5. Enable IP routing on `SW1`
+    >6. Configure SVIs for VLANs 10 & 20 on `SW1`
+
+    <br>
+
+    ---
+
+    <br>
+
+    ## Solutions
+
+    <br>
+
+    ### 1. Create VLAN 10 on SW1
+
+    <br>
+
+    ```text
+    # On SW1
+    configure terminal
+    vlan 10
+      exit
+    ```
+    <br>
+
+
+
+    ### 2. Assign `PC-1` to VLAN 10
+
+    <br>
+
+    ```text
+    # On SW1
+    configure terminal
+    interface GigabitEthernet0/1
+      switchport
+      switchport mode access
+      switchport access vlan 10
+    end
+    ```
+    <br>
+
+
+
+    ### 3. Create VLAN 20 on `SW1`
+
+    <br>
+
+    ```text
+    # On SW1
+    configure terminal
+    vlan 20
+      exit
+    ```
+    <br>
+
+
+
+    ### 4. Assign `PC-2` to VLAN 20
+
+    <br>
+
+    ```text
+     # On SW1
+    configure terminal
+    interface GigabitEthernet0/2
+      switchport
+      switchport mode access
+      switchport access vlan 20
+    end
+    ```
+    <br>
+
+
+
+    ### 5. Enable IP routing on `SW1`
+
+    <br>
+
+    ```text
+    # On SW1
+    configure terminal
+    ip routing
+    end
+    ```
+    <br>
+
+
+
+    ### 6. Configure SVIs for VLANs 10 & 20 on `SW1`
+
+    <br>
+
+    ```text
+    # On SW1
+    configure terminal
+
+    interface Vlan10
+      ip address 192.168.10.1 255.255.255.0
+      no shutdown
+
+    interface Vlan20
+      ip address 192.168.20.1 255.255.255.0
+      no shutdown
+    end
+    ```
+
+    <br>
+
+    ---
+
+    <br>
+
+    ## Verification
+
+    <br>
+
+    >**Note1:** PC-1 credentials are cisco:cisco
+
+    >**Note2:** After port configurations, SW1 will take 45 seconds for Spanning-Tree to transition to the FWD state.
+
+    <br>
+
+    ```text
+    # On PC-1
+    ping -c 5 192.168.20.10
+    ```
+    <br>
+
+    ---
+
+    <br>
+
+    ## Troubleshooting
+
+    | Device | Check | Command | Purpose |
+    |--------|-------|---------|---------|
+    | `SW1` | Interface status | `show interfaces status` | Verify interfaces are up and not disabled |
+    | `SW1` | Interface status | `show interface GigabitEthernet0/1` | Verify a specific interface is up and not disabled |
+    | `SW1` | VLANs | `show vlan brief` | Verify required VLANs exist |
+    | `SW1` | VLANs | `show vlan id 10` | Verify a specific VLAN exists |
+    | `SW1` | Switchport mode | `show interface GigabitEthernet0/1 switchport` | Verify switchport mode and VLAN assignment |
+    | `SW1` | Spanning tree state | `show spanning-tree vlan 10` | Verify the interface is forwarding |
+    | `SW1` | MAC learning | `show mac address-table vlan 10` | Verify MAC learning on the correct VLAN |
+    | `SW1` | SVI status | `show ip interface brief` | Verify VLAN interfaces are up with correct IPs |
+    | `SW1` | RIB state | `show ip rib database` | Verify the RIB is operational |
+    | `SW1` | Routing table | `show ip route` | Verify VLAN networks appear in the routing table |
+    | `SW1` | ARP | `show ip arp` | Verify ARP resolution for connected hosts |
+    | `SW1` | Connectivity test | `ping 192.168.10.10 source Vlan20` | Verify return traffic through the default gateway |
+  title: SVI - Switched Virtual Interface (IOS)
+  version: 0.3.0
