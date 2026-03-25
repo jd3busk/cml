@@ -1,8 +1,3 @@
-Here’s a cleaned `README.md` version you can drop into your lab content.
-
-[Download README.md](sandbox:/mnt/data/README.md)
-
-````md
 # Lab 1: Inter-VLAN Routing
 
 ## Tasks
@@ -231,8 +226,3 @@ ping 192.168.10.10 source Vlan20
 ```
 
 Ensure the host has a default gateway by sourcing a ping from a different IP network on the same router.
-
-```
-
-I also created the file for you here: [README.md](sandbox:/mnt/data/README.md)
-```
