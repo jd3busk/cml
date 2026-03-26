@@ -1,0 +1,791 @@
+annotations:
+  - border_color: '#00000000'
+    border_style: ''
+    color: '#808080FF'
+    rotation: 0
+    text_bold: false
+    text_content: PAgP
+    text_font: monospace
+    text_italic: false
+    text_size: 12
+    text_unit: pt
+    thickness: 1
+    type: text
+    x1: -400.0
+    y1: 0.0
+    z_index: 0
+  - border_color: '#00000000'
+    border_style: ''
+    color: '#808080FF'
+    rotation: 0
+    text_bold: false
+    text_content: LACP
+    text_font: monospace
+    text_italic: false
+    text_size: 12
+    text_unit: pt
+    thickness: 1
+    type: text
+    x1: -120.0
+    y1: 0.0
+    z_index: 0
+  - border_color: '#00000000'
+    border_style: ''
+    color: '#808080FF'
+    rotation: 0
+    text_bold: false
+    text_content: STATIC
+    text_font: monospace
+    text_italic: false
+    text_size: 12
+    text_unit: pt
+    thickness: 1
+    type: text
+    x1: -280.0
+    y1: 160.0
+    z_index: 0
+  - border_color: '#00000000'
+    border_style: ''
+    color: '#808080FF'
+    rotation: 0
+    text_bold: false
+    text_content: 192.168.23.x /24
+    text_font: monospace
+    text_italic: false
+    text_size: 12
+    text_unit: pt
+    thickness: 1
+    type: text
+    x1: -320.0
+    y1: 200.0
+    z_index: 0
+smart_annotations: []
+nodes:
+  - boot_disk_size: null
+    configuration:
+      - name: ios_config.txt
+        content: |-
+          Building configuration...
+
+          Current configuration : 1168 bytes
+          !
+          ! Last configuration change at 12:48:57 UTC Tue Jun 20 2023
+          !
+          version 15.2
+          service timestamps debug datetime msec
+          service timestamps log datetime msec
+          no service password-encryption
+          service compress-config
+          !
+          hostname SW1
+          !
+          boot-start-marker
+          boot-end-marker
+          !
+          !
+          no logging console
+          !
+          no aaa new-model
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          ip cef
+          no ipv6 cef
+          !
+          !
+          !
+          spanning-tree mode pvst
+          spanning-tree extend system-id
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          interface GigabitEthernet0/0
+           negotiation auto
+          !
+          interface GigabitEthernet0/1
+           negotiation auto
+          !
+          interface GigabitEthernet0/2
+           negotiation auto
+          !
+          interface GigabitEthernet0/3
+           negotiation auto
+          !
+          ip forward-protocol nd
+          !
+          ip http server
+          ip http secure-server
+          !
+          ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+          ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+          !
+          !
+          !
+          !
+          !
+          !
+          control-plane
+          !
+          !
+          line con 0
+           exec-timeout 0 0
+           privilege level 15
+           logging synchronous
+           transport output none
+          line aux 0
+          line vty 0 4
+           exec-timeout 0 0
+           logging synchronous
+           login local
+           transport input ssh
+           transport output none
+          line vty 5 15
+           logging synchronous
+           login local
+           transport input ssh
+           transport output none
+          !
+          !
+          end
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n0
+    image_definition: null
+    label: SW1
+    node_definition: iosvl2
+    parameters: {}
+    ram: null
+    tags: []
+    x: -240
+    y: -80
+    interfaces:
+      - id: i0
+        label: Loopback0
+        mac_address: null
+        type: loopback
+      - id: i1
+        label: GigabitEthernet0/0
+        mac_address: null
+        type: physical
+        slot: 0
+      - id: i2
+        label: GigabitEthernet0/1
+        mac_address: null
+        type: physical
+        slot: 1
+      - id: i3
+        label: GigabitEthernet0/2
+        mac_address: null
+        type: physical
+        slot: 2
+      - id: i4
+        label: GigabitEthernet0/3
+        mac_address: null
+        type: physical
+        slot: 3
+  - boot_disk_size: null
+    configuration:
+      - name: ios_config.txt
+        content: |-
+          Building configuration...
+
+          Current configuration : 1168 bytes
+          !
+          ! Last configuration change at 12:48:57 UTC Tue Jun 20 2023
+          !
+          version 15.2
+          service timestamps debug datetime msec
+          service timestamps log datetime msec
+          no service password-encryption
+          service compress-config
+          !
+          hostname SW2
+          !
+          boot-start-marker
+          boot-end-marker
+          !
+          !
+          no logging console
+          !
+          no aaa new-model
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          ip cef
+          no ipv6 cef
+          !
+          !
+          !
+          spanning-tree mode pvst
+          spanning-tree extend system-id
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          interface GigabitEthernet0/0
+           negotiation auto
+          !
+          interface GigabitEthernet0/1
+           negotiation auto
+          !
+          interface GigabitEthernet0/2
+           negotiation auto
+          !
+          interface GigabitEthernet0/3
+           negotiation auto
+          !
+          ip forward-protocol nd
+          !
+          ip http server
+          ip http secure-server
+          !
+          ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+          ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+          !
+          !
+          !
+          !
+          !
+          !
+          control-plane
+          !
+          !
+          line con 0
+           exec-timeout 0 0
+           privilege level 15
+           logging synchronous
+           transport output none
+          line aux 0
+          line vty 0 4
+           exec-timeout 0 0
+           logging synchronous
+           login local
+           transport input ssh
+           transport output none
+          line vty 5 15
+           logging synchronous
+           login local
+           transport input ssh
+           transport output none
+          !
+          !
+          end
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n1
+    image_definition: null
+    label: SW2
+    node_definition: iosvl2
+    parameters: {}
+    ram: null
+    tags: []
+    x: -360
+    y: 120
+    interfaces:
+      - id: i0
+        label: Loopback0
+        mac_address: null
+        type: loopback
+      - id: i1
+        label: GigabitEthernet0/0
+        mac_address: null
+        type: physical
+        slot: 0
+      - id: i2
+        label: GigabitEthernet0/1
+        mac_address: null
+        type: physical
+        slot: 1
+      - id: i3
+        label: GigabitEthernet0/2
+        mac_address: null
+        type: physical
+        slot: 2
+      - id: i4
+        label: GigabitEthernet0/3
+        mac_address: null
+        type: physical
+        slot: 3
+  - boot_disk_size: null
+    configuration:
+      - name: ios_config.txt
+        content: |-
+          Building configuration...
+
+          Current configuration : 1168 bytes
+          !
+          ! Last configuration change at 12:48:58 UTC Tue Jun 20 2023
+          !
+          version 15.2
+          service timestamps debug datetime msec
+          service timestamps log datetime msec
+          no service password-encryption
+          service compress-config
+          !
+          hostname SW3
+          !
+          boot-start-marker
+          boot-end-marker
+          !
+          !
+          no logging console
+          !
+          no aaa new-model
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          ip cef
+          no ipv6 cef
+          !
+          !
+          !
+          spanning-tree mode pvst
+          spanning-tree extend system-id
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          interface GigabitEthernet0/0
+           negotiation auto
+          !
+          interface GigabitEthernet0/1
+           negotiation auto
+          !
+          interface GigabitEthernet0/2
+           negotiation auto
+          !
+          interface GigabitEthernet0/3
+           negotiation auto
+          !
+          ip forward-protocol nd
+          !
+          ip http server
+          ip http secure-server
+          !
+          ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+          ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+          !
+          !
+          !
+          !
+          !
+          !
+          control-plane
+          !
+          !
+          line con 0
+           exec-timeout 0 0
+           privilege level 15
+           logging synchronous
+           transport output none
+          line aux 0
+          line vty 0 4
+           exec-timeout 0 0
+           logging synchronous
+           login local
+           transport input ssh
+           transport output none
+          line vty 5 15
+           logging synchronous
+           login local
+           transport input ssh
+           transport output none
+          !
+          !
+          end
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n2
+    image_definition: null
+    label: SW3
+    node_definition: iosvl2
+    parameters: {}
+    ram: null
+    tags: []
+    x: -120
+    y: 120
+    interfaces:
+      - id: i0
+        label: Loopback0
+        mac_address: null
+        type: loopback
+      - id: i1
+        label: GigabitEthernet0/0
+        mac_address: null
+        type: physical
+        slot: 0
+      - id: i2
+        label: GigabitEthernet0/1
+        mac_address: null
+        type: physical
+        slot: 1
+      - id: i3
+        label: GigabitEthernet0/2
+        mac_address: null
+        type: physical
+        slot: 2
+      - id: i4
+        label: GigabitEthernet0/3
+        mac_address: null
+        type: physical
+        slot: 3
+links:
+  - id: l0
+    n1: n0
+    n2: n1
+    i1: i1
+    i2: i1
+    conditioning: {}
+    label: SW1-GigabitEthernet0/0<->SW2-GigabitEthernet0/0
+  - id: l1
+    n1: n0
+    n2: n1
+    i1: i2
+    i2: i2
+    conditioning: {}
+    label: SW1-GigabitEthernet0/1<->SW2-GigabitEthernet0/1
+  - id: l2
+    n1: n0
+    n2: n2
+    i1: i3
+    i2: i1
+    conditioning: {}
+    label: SW1-GigabitEthernet0/2<->SW3-GigabitEthernet0/0
+  - id: l3
+    n1: n0
+    n2: n2
+    i1: i4
+    i2: i2
+    conditioning: {}
+    label: SW1-GigabitEthernet0/3<->SW3-GigabitEthernet0/1
+  - id: l4
+    n1: n1
+    n2: n2
+    i1: i3
+    i2: i3
+    conditioning: {}
+    label: SW2-GigabitEthernet0/2<->SW3-GigabitEthernet0/2
+  - id: l5
+    n1: n1
+    n2: n2
+    i1: i4
+    i2: i4
+    conditioning: {}
+    label: SW2-GigabitEthernet0/3<->SW3-GigabitEthernet0/3
+lab:
+  description: ''
+  notes: |-
+    # Lab 3: EtherChannels
+
+    <br>
+
+    ## Tasks
+
+    >1. Configure a PAgP Etherchannel between `SW1` and `SW2`
+    >   - `SW1` should be actively trying to form the EtherChannel.
+    >2. Configure an LACP Etherchannel between `SW1` and `SW3`.
+    >   - `SW1` should be actively trying to form the EtherChannel.
+    >3. Configure a Static Layer 3 EtherChannel between `SW2` and `SW3`
+    >   - `SW2` = 192.168.23.2/24
+    >   - `SW3` = 192.168.23.3/24
+    >5. Change the load-balancing method to destination MAC address on all switches.
+    >6. Verify that the Etherchannels are operational.
+
+    <br>
+
+    ---
+
+    <br>
+
+    ## Solutions
+
+    <br>
+
+    ### 1. Configure a PAgP Etherchannel between `SW1` and `SW2`
+
+    <br>
+
+    ```text
+    # SW1
+    configure terminal
+    default interface GigabitEthernet0/0
+    default interface GigabitEthernet0/1
+
+    interface range GigabitEthernet0/0 - 1
+      shutdown
+      switchport
+      channel-group 12 mode desirable
+      no shutdown
+
+    interface Port-channel 12
+      switchport trunk encapsulation dot1q
+      switchport mode trunk
+      no shutdown
+      end
+
+    ```
+    <br>
+
+    ```text
+    # SW2
+    configure terminal
+    default interface GigabitEthernet0/0
+    default interface GigabitEthernet0/1
+
+    interface range GigabitEthernet0/0 - 1
+      shutdown
+      switchport
+      channel-group 12 mode auto
+      no shutdown
+
+    interface Port-channel 12
+      switchport trunk encapsulation dot1q
+      switchport mode trunk
+      no shutdown
+      end
+
+    ```
+    <br>
+
+    ### 2. Configure an LACP Etherchannel between `SW1` and `SW3`
+
+    <br>
+
+    ```text
+    # SW1
+    configure terminal
+    default interface GigabitEthernet0/2
+    default interface GigabitEthernet0/3
+
+    interface range GigabitEthernet0/2 - 3
+      shutdown
+      switchport
+      channel-group 13 mode active
+      no shutdown
+
+    interface Port-channel 13
+      switchport trunk encapsulation dot1q
+      switchport mode trunk
+      no shutdown
+      end
+
+    ```
+
+    <br>
+
+    ```text
+    # SW3
+    configure terminal
+    default interface GigabitEthernet0/0
+    default interface GigabitEthernet0/1
+
+    interface range GigabitEthernet0/0 - 1
+      shutdown
+      switchport
+      channel-group 13 mode passive
+      no shutdown
+
+    interface Port-channel 13
+      switchport trunk encapsulation dot1q
+      switchport mode trunk
+      no shutdown
+      end
+
+    ```
+
+    <br>
+
+    ### 3. Configure a Static Layer 3 EtherChannel between `SW2` and `SW3`
+
+    <br>
+
+    ```text
+    # SW2
+    configure terminal
+    default interface GigabitEthernet0/2
+    default interface GigabitEthernet0/3
+
+    interface range GigabitEthernet0/2 - 3
+      shutdown
+      no switchport
+      channel-group 23 mode on
+      no shutdown
+
+    interface Port-channel 23
+      ip address 192.168.23.2 255.255.255.0
+      no shutdown
+      end
+
+    ```
+
+    <br>
+
+    ```text
+    # SW3
+    configure terminal
+    default interface GigabitEthernet0/2
+    default interface GigabitEthernet0/3
+
+    interface range GigabitEthernet0/2 - 3
+      shutdown
+      no switchport
+      channel-group 23 mode on
+      no shutdown
+
+    interface Port-channel 23
+      ip address 192.168.23.3 255.255.255.0
+      no shutdown
+      end
+
+    ```
+
+    <br>
+
+    ### 4. Change load-balancing to destination MAC
+
+    > **NOTE:** This configuration only applies on the local switch. So it should be configured on both sides.
+
+    <br>
+
+    ```text
+    # SW1, SW2 & SW3
+    configure terminal
+    port-channel load-balance dst-mac
+    end
+
+    ```
+
+    <br>
+
+    ---
+
+    <br>
+
+    ## Verification
+
+    <br>
+
+    > **Note 1:** Verify that EtherChannel member interfaces are bundled and show `(P)` in the summary output.
+
+    > **Note 2:** Verify that the port-channels are trunking properly, spanning-tree is forwarding, and load-balancing is based on destination MAC.
+
+    <br>
+
+    ```text
+    # SW1
+    terminal length 0
+    show etherchannel summary
+    show interfaces trunk
+    show spanning-tree interface Port-channel12
+    show spanning-tree interface Port-channel13
+    show etherchannel load-balance
+
+    ```
+
+    <br>
+
+    ```text
+    # SW2
+    terminal length 0
+    show etherchannel summary
+    show etherchannel 12 detail
+    show etherchannel 23 detail
+    show interfaces trunk
+    show spanning-tree interface Port-channel12
+    show spanning-tree interface Port-channel23
+    show etherchannel load-balance
+    ping 192.168.23.3
+
+    ```
+
+    <br>
+
+    ```text
+    # SW3
+    terminal length 0
+    show etherchannel summary
+    show etherchannel 13 detail
+    show etherchannel 23 detail
+    show interfaces trunk
+    show spanning-tree interface Port-channel13
+    show spanning-tree interface Port-channel23
+    show etherchannel load-balance
+    ping 192.168.23.2
+
+    ```
+
+    <br>
+
+    ---
+
+    <br>
+
+    ## Troubleshooting
+
+    | Device          | Check                 | Command                                        | Purpose                                                                       |
+    | --------------- | --------------------- | ---------------------------------------------- | ----------------------------------------------------------------------------- |
+    | `SW1/SW2/SW3` | Interface Status      | `show interfaces status`                       | Ensure that the ports are not disabled.                                       |
+    | `SW1/SW2/SW3` | Interface Details     | `show interface GigabitEthernet0/1`            | Ensure that the ports are not disabled.                                       |
+    | `SW1/SW2/SW3` | Switchport Mode       | `show interface GigabitEthernet0/1 switchport` | Ensure the port is in the correct operational mode.                           |
+    | `SW1/SW2/SW3` | EtherChannel Summary  | `show etherchannel summary`                    | Ensure the port-channel member statuses show `(P)`.                           |
+    | `SW1/SW2/SW3` | EtherChannel Detail   | `show etherchannel 12 detail`                  | Ensure local and remote ports are enabled and not suspended.                  |
+    | `SW1/SW2/SW3` | Trunk Status          | `show interfaces trunk`                        | Ensure that the port-channels are working as Layer 2 trunks.                  |
+    | `SW1/SW2/SW3` | STP State             | `show spanning-tree interface Port-channel12`  | Ensure that spanning-tree is in the FWD state on the port-channel.            |
+    | `SW1/SW2/SW3` | Load-Balancing Method | `show etherchannel load-balance`               | Ensure that the load-balancing algorithm is based on destination MAC address. |
+  title: Etherchannel
+  version: 0.3.0
