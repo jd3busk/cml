@@ -34,6 +34,7 @@ interface GigabitEthernet0/0
  switchport trunk encapsulation dot1q
  switchport mode trunk
 end
+
 ````
 
 <br>
@@ -47,6 +48,7 @@ interface range GigabitEthernet0/0 - 1
  switchport trunk encapsulation dot1q
  switchport mode trunk
 end
+
 ```
 
 <br>
@@ -60,6 +62,7 @@ interface GigabitEthernet0/0
  switchport trunk encapsulation dot1q
  switchport mode trunk
 end
+
 ```
 
 <br>
@@ -74,6 +77,7 @@ configure terminal
 vtp version 2
 vtp mode server
 end
+
 ```
 
 <br>
@@ -88,6 +92,7 @@ configure terminal
 vtp version 2
 vtp mode transparent
 end
+
 ```
 
 <br>
@@ -102,6 +107,7 @@ configure terminal
 vtp version 2
 vtp mode client
 end
+
 ```
 
 <br>
@@ -116,6 +122,7 @@ configure terminal
 vtp domain LAB
 vtp password LAB
 end
+
 ```
 
 ```text
@@ -124,6 +131,7 @@ configure terminal
 vtp domain LAB
 vtp password LAB
 end
+
 ```
 
 ```text
@@ -132,6 +140,7 @@ configure terminal
 vtp domain LAB
 vtp password LAB
 end
+
 ```
 
 <br>
@@ -149,6 +158,7 @@ vlan 10
 vlan 20
 vlan 30
 end
+
 ```
 
 ```text
@@ -158,6 +168,7 @@ vlan 10
 vlan 20
 vlan 30
 end
+
 ```
 
 <br>
@@ -182,6 +193,7 @@ show vtp status | include version running|Domain
 show vtp password
 show vlan brief
 show vtp status | include Revision
+
 ```
 
 ```text
@@ -190,6 +202,7 @@ show vtp status | include version running|Domain
 show vtp password
 show vlan brief
 show vtp status | include Revision
+
 ```
 
 ```text
@@ -198,6 +211,7 @@ show vtp status | include version running|Domain
 show vtp password
 show vlan brief
 show vtp status | include Revision
+
 ```
 
 <br>

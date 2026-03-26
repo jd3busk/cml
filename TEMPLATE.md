@@ -28,6 +28,7 @@
 ```text
 # [DEVICE 1]
 [COMMANDS]
+
 ```
 
 <br>
@@ -35,6 +36,8 @@
 ```text
 # [DEVICE 2]
 [COMMANDS]
+
+
 ```
 
 <br>
@@ -42,6 +45,7 @@
 ```text
 # [DEVICE 3]
 [COMMANDS]
+
 ```
 
 <br>
@@ -53,6 +57,7 @@
 ```text
 # [DEVICE]
 [COMMANDS]
+
 ```
 
 <br>
@@ -64,6 +69,7 @@
 ```text
 # [DEVICE]
 [COMMANDS]
+
 ```
 
 <br>
@@ -75,6 +81,7 @@
 ```text
 # [DEVICE]
 [COMMANDS]
+
 ```
 
 <br>
@@ -86,6 +93,7 @@
 ```text
 # [DEVICE 1]
 [COMMANDS]
+
 ```
 
 <br>
@@ -93,6 +101,7 @@
 ```text
 # [DEVICE 2]
 [COMMANDS]
+
 ```
 
 <br>
@@ -100,6 +109,7 @@
 ```text
 # [DEVICE 3]
 [COMMANDS]
+
 ```
 
 <br>
@@ -113,6 +123,7 @@
 ```text
 # [DEVICE 1]
 [COMMANDS]
+
 ```
 
 <br>
@@ -120,6 +131,7 @@
 ```text
 # [DEVICE 2]
 [COMMANDS]
+
 ```
 
 <br>
@@ -141,6 +153,7 @@
 ```text
 # [DEVICE 1]
 [VERIFICATION COMMANDS]
+
 ```
 
 <br>
@@ -148,6 +161,7 @@
 ```text
 # [DEVICE 2]
 [VERIFICATION COMMANDS]
+
 ```
 
 <br>
@@ -155,6 +169,7 @@
 ```text
 # [DEVICE 3]
 [VERIFICATION COMMANDS]
+
 ```
 
 <br>
