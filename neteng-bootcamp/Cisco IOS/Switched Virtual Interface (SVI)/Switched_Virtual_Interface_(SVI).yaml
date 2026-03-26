@@ -429,5 +429,5 @@ lab:
     | `SW1` | Routing table | `show ip route` | Verify VLAN networks appear in the routing table |
     | `SW1` | ARP | `show ip arp` | Verify ARP resolution for connected hosts |
     | `SW1` | Connectivity test | `ping 192.168.10.10 source Vlan20` | Verify return traffic through the default gateway |
-  title: SVI - Switched Virtual Interface (IOS)
+  title: Switched Virtual Interface (SVI)
   version: 0.3.0

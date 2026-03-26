@@ -573,5 +573,5 @@ lab:
     | `R1` | Routing table | `show ip route` | Verify VLAN networks appear in the routing table |
     | `R1` | ARP | `show ip arp` | Verify ARP resolution |
     | `R1` | Connectivity test | `ping 192.168.10.10 source GigabitEthernet0/0.20` | Verify return traffic through the default gateway |
-  title: Router-on-a-Stick (IOS)
+  title: Router-on-a-Stick
   version: 0.3.0
