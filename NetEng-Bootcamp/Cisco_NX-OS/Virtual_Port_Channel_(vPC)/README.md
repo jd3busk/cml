@@ -31,9 +31,9 @@
 # NX1
 configure terminal
 interface mgmt0
- vrf member management
- ip address 192.168.255.1/24
- end
+  vrf member management
+  ip address 192.168.255.1/24
+  end
 
 ````
 
@@ -43,9 +43,9 @@ interface mgmt0
 # NX2
 configure terminal
 interface mgmt0
- vrf member management
- ip address 192.168.255.2/24
- end
+  vrf member management
+  ip address 192.168.255.2/24
+  end
 
 ```
 
@@ -61,9 +61,9 @@ configure terminal
 feature vpc
 
 vpc domain 1
- role priority 1
- peer-keepalive destination 192.168.255.2 source 192.168.255.1
- end
+  role priority 1
+  peer-keepalive destination 192.168.255.2 source 192.168.255.1
+  end
 
 ```
 
@@ -75,9 +75,9 @@ configure terminal
 feature vpc
 
 vpc domain 1
- role priority 2
- peer-keepalive destination 192.168.255.1 source 192.168.255.2
- end
+  role priority 2
+  peer-keepalive destination 192.168.255.1 source 192.168.255.2
+  end
 
 ```
 
@@ -92,21 +92,26 @@ vpc domain 1
 configure terminal
 feature lacp
 
+default interface Ethernet1/1
+default interface Ethernet1/2
+
 interface Ethernet1/1 - 2
- switchport
- channel-group 1000 mode active
+  shutdown
+  switchport
+  channel-group 1000 mode active
+  no shutdown
 
 interface port-channel1000
- switchport mode trunk
- spanning-tree port type network
- vpc peer-link
- end
+  switchport mode trunk
+  vpc peer-link
+  no shutdown
+  end
 
 ```
 
 <br>
 
-### 4. Configure vPC 10 Toward SWITCH
+### 4. Configure vPC 10 Toward the IOS-SWITCH
 
 <br>
 
@@ -114,18 +119,22 @@ interface port-channel1000
 # NX1 & NX2
 configure terminal
 vlan 10
- name SWITCH
+  name IOS-SWITCH
+
+default interface Ethernet1/3
 
 interface Ethernet1/3
- switchport
- channel-group 10 mode active
- no shutdown
+  shutdown
+  switchport
+  channel-group 10 mode active
+  no shutdown
 
 interface port-channel10
- switchport mode trunk
- switchport trunk allowed vlan 10
- vpc 10
- end
+  switchport mode trunk
+  switchport trunk allowed vlan 10
+  vpc 10
+  no shutdown
+  end
 
 ```
 
@@ -139,26 +148,22 @@ interface port-channel10
 # NX1 & NX2
 configure terminal
 vlan 20
- name SERVER
+  name SERVER
+
+default interface Ethernet1/4
 
 interface Ethernet1/4
- switchport
- channel-group 20 mode active
- no shutdown
+  shutdown
+  switchport
+  channel-group 20 mode active
+  no shutdown
 
 interface port-channel20
- switchport mode access
- switchport access vlan 20
- vpc 20
- end
-
-```
-
-<br>
-
-```text
-# SERVER
-ping 192.168.10.10
+  switchport mode access
+  switchport access vlan 20
+  vpc 20
+  no shutdown
+  end
 
 ```
 
@@ -184,11 +189,11 @@ end
 # NX1 & NX2
 configure terminal
 interface port-channel10
- spanning-tree port type normal
+  spanning-tree port type normal
 
 interface port-channel20
- spanning-tree port type edge
- end
+  spanning-tree port type edge
+  end
 
 ```
 
@@ -205,28 +210,28 @@ feature interface-vlan
 feature hsrp
 
 vpc domain 1
- peer-gateway
+  peer-gateway
 
 interface Vlan10
- no shutdown
- ip address 192.168.10.2/24
- hsrp version 2
- hsrp 10
-  authentication text pa55w0rd
-  preempt
-  priority 200
-  ip 192.168.10.1
+  no shutdown
+  ip address 192.168.10.2/24
+  hsrp version 2
+  hsrp 10
+    authentication text pa55w0rd
+    preempt
+    priority 200
+    ip 192.168.10.1
 
 interface Vlan20
- no shutdown
- ip address 192.168.20.2/24
- hsrp version 2
- hsrp 20
-  authentication text pa55w0rd
-  preempt
-  priority 200
-  ip 192.168.20.1
- end
+  no shutdown
+  ip address 192.168.20.2/24
+  hsrp version 2
+  hsrp 20
+    authentication text pa55w0rd
+    preempt
+    priority 200
+    ip 192.168.20.1
+  end
 
 ```
 
@@ -239,36 +244,28 @@ feature interface-vlan
 feature hsrp
 
 vpc domain 1
- peer-gateway
+  peer-gateway
 
 interface Vlan10
- no shutdown
- ip address 192.168.10.3/24
- hsrp version 2
- hsrp 10
-  authentication text pa55w0rd
-  preempt
-  priority 150
-  ip 192.168.10.1
+  no shutdown
+  ip address 192.168.10.3/24
+  hsrp version 2
+  hsrp 10
+    authentication text pa55w0rd
+    preempt
+    priority 150
+    ip 192.168.10.1
 
 interface Vlan20
- no shutdown
- ip address 192.168.20.3/24
- hsrp version 2
- hsrp 20
-  authentication text pa55w0rd
-  preempt
-  priority 150
-  ip 192.168.20.1
- end
-
-```
-
-<br>
-
-```text
-# SERVER
-ping 192.168.10.10
+  no shutdown
+  ip address 192.168.20.3/24
+  hsrp version 2
+  hsrp 20
+    authentication text pa55w0rd
+    preempt
+    priority 150
+    ip 192.168.20.1
+  end
 
 ```
 
@@ -293,12 +290,12 @@ show hsrp group 20
 # NX1
 configure terminal
 interface Vlan10
- hsrp 10
-  priority 100
+  hsrp 10
+    priority 100
 
 interface Vlan20
- hsrp 20
-  priority 100
+  hsrp 20
+    priority 100
 
 ```
 
@@ -343,6 +340,8 @@ show hsrp
 show mac address-table dynamic vlan 10
 show mac address-table dynamic vlan 20
 show ip arp
+ping 192.168.10.10 count 5 interval 1
+ping 192.168.20.10 count 5 interval 1
 
 ```
 
@@ -360,14 +359,8 @@ show hsrp
 show mac address-table dynamic vlan 10
 show mac address-table dynamic vlan 20
 show ip arp
-
-```
-
-<br>
-
-```text
-# SERVER
-ping 192.168.10.10
+ping 192.168.10.10 count 5 interval 1
+ping 192.168.20.10 count 5 interval 1
 
 ```
 
@@ -381,8 +374,8 @@ ping 192.168.10.10
 
 | Device      | Check                       | Command                                       | Purpose                                                            |              |                                                 |
 | ----------- | --------------------------- | --------------------------------------------- | ------------------------------------------------------------------ | ------------ | ----------------------------------------------- |
-| `NX1`       | Management Interface Status | `show ip interface brief vrf management`      | Ensure mgmt0 is in the correct VRF and has the correct IP address. |              |                                                 |
-| `NX1`       | Management Reachability     | `ping 192.168.255.2 vrf management`           | Ensure NX1 can reach the mgmt0 interface of NX2.                   |              |                                                 |
+| `NX1/NX2`       | Management Interface Status | `show ip interface brief vrf management`      | Ensure mgmt0 is in the correct VRF and has the correct IP address. |              |                                                 |
+| `NX1/NX2`       | Management Reachability     | `ping 192.168.255.2 vrf management`           | Ensure NX1 can reach the mgmt0 interface of NX2.                   |              |                                                 |
 | `NX1/NX2` | vPC Domain Configuration    | `show running-config                          | section 'feature                                                   | vpc domain'` | Ensure the vPC domain configuration is correct. |
 | `NX1/NX2` | vPC Peer Status             | `show vpc brief`                              | Ensure the peer adjacency was formed successfully.                 |              |                                                 |
 | `NX1/NX2` | vPC Consistency             | `show vpc consistency-parameters vpc 10`      | Ensure the vPC configuration is synchronized on both switches.     |              |                                                 |
