@@ -30,6 +30,7 @@
 configure terminal
 interface range GigabitEthernet0/0 - 1
  channel-group 12 mode desirable
+ 
 ````
 
 <br>
@@ -39,6 +40,7 @@ interface range GigabitEthernet0/0 - 1
 configure terminal
 interface range GigabitEthernet0/0 - 1
  channel-group 12 mode auto
+
 ```
 
 <br>
@@ -53,6 +55,7 @@ interface Port-channel 12
  switchport trunk encapsulation dot1q
  switchport mode trunk
  end
+
 ```
 
 <br>
@@ -63,6 +66,7 @@ interface Port-channel 12
  switchport trunk encapsulation dot1q
  switchport mode trunk
  end
+
 ```
 
 <br>
@@ -76,6 +80,7 @@ interface Port-channel 12
 configure terminal
 interface range GigabitEthernet0/2 - 3
  channel-group 13 mode active
+
 ```
 
 <br>
@@ -85,6 +90,7 @@ interface range GigabitEthernet0/2 - 3
 configure terminal
 interface range GigabitEthernet0/0 - 1
  channel-group 13 mode passive
+
 ```
 
 <br>
@@ -103,6 +109,7 @@ interface Port-channel 23
  switchport trunk encapsulation dot1q
  switchport mode trunk
  end
+
 ```
 
 <br>
@@ -117,6 +124,7 @@ interface Port-channel 23
  switchport trunk encapsulation dot1q
  switchport mode trunk
  end
+
 ```
 
 <br>
@@ -131,6 +139,7 @@ interface Port-channel 13
  switchport trunk encapsulation dot1q
  switchport mode trunk
  end
+
 ```
 
 <br>
@@ -141,6 +150,7 @@ interface Port-channel 13
  switchport trunk encapsulation dot1q
  switchport mode trunk
  end
+
 ```
 
 <br>
@@ -156,6 +166,7 @@ interface Port-channel 13
 configure terminal
 port-channel load-balance dst-mac
 end
+
 ```
 
 <br>
@@ -165,6 +176,7 @@ end
 configure terminal
 port-channel load-balance dst-mac
 end
+
 ```
 
 <br>
@@ -174,6 +186,7 @@ end
 configure terminal
 port-channel load-balance dst-mac
 end
+
 ```
 
 <br>
@@ -199,6 +212,7 @@ show interfaces trunk
 show spanning-tree interface Port-channel12
 show spanning-tree interface Port-channel13
 show etherchannel load-balance
+
 ```
 
 <br>
@@ -212,6 +226,7 @@ show interfaces trunk
 show spanning-tree interface Port-channel12
 show spanning-tree interface Port-channel23
 show etherchannel load-balance
+
 ```
 
 <br>
@@ -225,6 +240,7 @@ show interfaces trunk
 show spanning-tree interface Port-channel13
 show spanning-tree interface Port-channel23
 show etherchannel load-balance
+
 ```
 
 <br>
