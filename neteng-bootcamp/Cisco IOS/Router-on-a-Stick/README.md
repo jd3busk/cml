@@ -1,4 +1,4 @@
-# SVI - Switched Virtual Interfaces (IOS)
+# Router-on-a-Stick
 
 <br>
 
@@ -8,8 +8,8 @@
 >2. Assign `PC-1` to VLAN 10
 >3. Create VLAN 20 on `SW1`
 >4. Assign `PC-2` to VLAN 20
->5. Enable IP routing on `SW1`
->6. Configure SVIs for VLANs 10 & 20 on `SW1`
+>5. Configure the link between `SW1` and `R1` as an 802.1Q trunk
+>6. Configure VLAN-Tagged Subinterfaces on `R1`
 
 <br>
 
@@ -83,33 +83,40 @@ end
 
 
 
-### 5. Enable IP routing on `SW1`
+### 5. Configure the link between `SW1` and `R1` as an 802.1Q trunk
 
 <br>
 
 ```text
 # On SW1
 configure terminal
-ip routing
+interface GigabitEthernet0/0
+  switchport
+  switchport trunk encapsulation dot1q
+  switchport mode trunk
 end
 ```
 <br>
 
 
 
-### 6. Configure SVIs for VLANs 10 & 20 on `SW1`
+### 6. Configure VLAN-Tagged Subinterfaces on `R1`
 
 <br>
 
 ```text
 # On SW1
 configure terminal
+interface GigabitEthernet0/0
+  no shutdown
 
-interface Vlan10
+interface GigabitEthernet0/0.10
+  encapsulation dot1q 10
   ip address 192.168.10.1 255.255.255.0
   no shutdown
 
-interface Vlan20
+interface GigabitEthernet0/0.20
+  encapsulation dot1q 20
   ip address 192.168.20.1 255.255.255.0
   no shutdown
 end
@@ -129,7 +136,7 @@ end
 
 >**Note2:** After port configurations, SW1 will take 45 seconds for Spanning-Tree to transition to the FWD state.
 
-<br>
+<br> 
 
 ```text
 # On PC-1
@@ -152,8 +159,8 @@ ping -c 5 192.168.20.10
 | `SW1` | Switchport mode | `show interface GigabitEthernet0/1 switchport` | Verify switchport mode and VLAN assignment |
 | `SW1` | Spanning tree state | `show spanning-tree vlan 10` | Verify the interface is forwarding |
 | `SW1` | MAC learning | `show mac address-table vlan 10` | Verify MAC learning on the correct VLAN |
-| `SW1` | SVI status | `show ip interface brief` | Verify VLAN interfaces are up with correct IPs |
-| `SW1` | RIB state | `show ip rib database` | Verify the RIB is operational |
-| `SW1` | Routing table | `show ip route` | Verify VLAN networks appear in the routing table |
-| `SW1` | ARP | `show ip arp` | Verify ARP resolution for connected hosts |
-| `SW1` | Connectivity test | `ping 192.168.10.10 source Vlan20` | Verify return traffic through the default gateway |
+| `R1` | Interface IP status | `show ip interface brief` | Verify interfaces are up with correct IPs |
+| `R1` | RIB state | `show ip rib database` | Verify the RIB is operational |
+| `R1` | Routing table | `show ip route` | Verify VLAN networks appear in the routing table |
+| `R1` | ARP | `show ip arp` | Verify ARP resolution |
+| `R1` | Connectivity test | `ping 192.168.10.10 source GigabitEthernet0/0.20` | Verify return traffic through the default gateway |
