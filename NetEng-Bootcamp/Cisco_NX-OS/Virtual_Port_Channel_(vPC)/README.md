@@ -120,6 +120,16 @@ interface port-channel1000
 
 <br>
 
+#### Verification
+```text
+# NX1
+terminal length 0
+watch show vpc
+
+```
+
+<br>
+
 ### 4. Configure vPC 10 Toward the IOS-SWITCH
 
 <br>
@@ -144,6 +154,27 @@ interface port-channel10
   vpc 10
   no shutdown
   end
+
+```
+
+<br>
+
+#### Verification
+```text
+# NX1
+terminal length 0
+watch show vpc
+
+```
+
+<br>
+
+>##### NOTE: You may need to hit the [return] key a few times on the IOS-SWITCH.
+
+```text
+# IOS-SWITCH
+
+
 
 ```
 
