@@ -4,12 +4,15 @@
 
 ## Tasks
 
->1. Configure PAgP between SW1 and SW2, with SW1 actively trying to form the EtherChannel.
->2. Configure LACP between SW1 and SW3, with SW1 actively trying to form the EtherChannel.
->3. Configure forced EtherChannel bonding between SW2 and SW3.
->4. Configure all EtherChannels as Layer 2 trunks.
+>1. Configure a PAgP Etherchannel between `SW1` and `SW2`
+>   - `SW1` should be actively trying to form the EtherChannel.
+>2. Configure an LACP Etherchannel between `SW1` and `SW3`.
+>   - `SW1` should be actively trying to form the EtherChannel.
+>3. Configure a Static Layer 3 EtherChannel between `SW2` and `SW3` 
+>   - `SW2` = 192.168.23.2/24
+>   - `SW3` = 192.168.23.3/24
 >5. Change the load-balancing method to destination MAC address on all switches.
->6. Verify and troubleshoot EtherChannel, trunking, and spanning-tree operation.
+>6. Verify that the Etherchannels are operational.
 
 <br>
 
@@ -21,14 +24,18 @@
 
 <br>
 
-### 1. Configure PAgP between SW1 and SW2
+### 1. Configure a PAgP Etherchannel between `SW1` and `SW2`
 
 <br>
 
 ```text
 # SW1
 configure terminal
+default interface GigabitEthernet0/0
+default interface GigabitEthernet0/1
+
 interface range GigabitEthernet0/0 - 1
+  shutdown
   switchport
   channel-group 12 mode desirable
   no shutdown
@@ -36,6 +43,7 @@ interface range GigabitEthernet0/0 - 1
 interface Port-channel 12
   switchport trunk encapsulation dot1q
   switchport mode trunk
+  no shutdown
   end
 
 ```
@@ -44,7 +52,11 @@ interface Port-channel 12
 ```text
 # SW2
 configure terminal
+default interface GigabitEthernet0/0
+default interface GigabitEthernet0/1
+
 interface range GigabitEthernet0/0 - 1
+  shutdown
   switchport
   channel-group 12 mode auto
   no shutdown
@@ -52,19 +64,24 @@ interface range GigabitEthernet0/0 - 1
 interface Port-channel 12
   switchport trunk encapsulation dot1q
   switchport mode trunk
+  no shutdown
   end
 
 ```
 <br>
 
-### 2. Configure LACP between SW1 and SW3
+### 2. Configure an LACP Etherchannel between `SW1` and `SW3`
 
 <br>
 
 ```text
 # SW1
 configure terminal
+default interface GigabitEthernet0/2
+default interface GigabitEthernet0/3
+
 interface range GigabitEthernet0/2 - 3
+  shutdown
   switchport
   channel-group 13 mode active
   no shutdown
@@ -72,6 +89,7 @@ interface range GigabitEthernet0/2 - 3
 interface Port-channel 13
   switchport trunk encapsulation dot1q
   switchport mode trunk
+  no shutdown
   end
 
 ```
@@ -81,7 +99,11 @@ interface Port-channel 13
 ```text
 # SW3
 configure terminal
+default interface GigabitEthernet0/0
+default interface GigabitEthernet0/1
+
 interface range GigabitEthernet0/0 - 1
+  shutdown
   switchport
   channel-group 13 mode passive
   no shutdown
@@ -89,27 +111,32 @@ interface range GigabitEthernet0/0 - 1
 interface Port-channel 13
   switchport trunk encapsulation dot1q
   switchport mode trunk
+  no shutdown
   end
 
 ```
 
 <br>
 
-### 4. Configure a forced EtherChannel between SW2 and SW3
+### 3. Configure a Static Layer 3 EtherChannel between `SW2` and `SW3`
 
 <br>
 
 ```text
 # SW2
 configure terminal
+default interface GigabitEthernet0/2
+default interface GigabitEthernet0/3
+
 interface range GigabitEthernet0/2 - 3
-  switchport
+  shutdown
+  no switchport
   channel-group 23 mode on
   no shutdown
 
 interface Port-channel 23
-  switchport trunk encapsulation dot1q
-  switchport mode trunk
+  ip address 192.168.23.2 255.255.255.0
+  no shutdown
   end
 
 ```
@@ -119,23 +146,27 @@ interface Port-channel 23
 ```text
 # SW3
 configure terminal
+default interface GigabitEthernet0/2
+default interface GigabitEthernet0/3
+
 interface range GigabitEthernet0/2 - 3
-  switchport
+  shutdown
+  no switchport
   channel-group 23 mode on
   no shutdown
 
 interface Port-channel 23
-  switchport trunk encapsulation dot1q
-  switchport mode trunk
+  ip address 192.168.23.3 255.255.255.0
+  no shutdown
   end
 
 ```
 
 <br>
 
-### 6. Change load-balancing to destination MAC
+### 4. Change load-balancing to destination MAC
 
-> **NOTE:** This configuration only applies on the local switch.
+> **NOTE:** This configuration only applies on the local switch. So it should be configured on both sides.
 
 <br>
 
@@ -165,6 +196,7 @@ end
 
 ```text
 # SW1
+terminal length 0
 show etherchannel summary
 show interfaces trunk
 show spanning-tree interface Port-channel12
@@ -177,6 +209,7 @@ show etherchannel load-balance
 
 ```text
 # SW2
+terminal length 0
 show etherchannel summary
 show etherchannel 12 detail
 show etherchannel 23 detail
@@ -184,6 +217,7 @@ show interfaces trunk
 show spanning-tree interface Port-channel12
 show spanning-tree interface Port-channel23
 show etherchannel load-balance
+ping 192.168.23.3
 
 ```
 
@@ -191,6 +225,7 @@ show etherchannel load-balance
 
 ```text
 # SW3
+terminal length 0
 show etherchannel summary
 show etherchannel 13 detail
 show etherchannel 23 detail
@@ -198,6 +233,7 @@ show interfaces trunk
 show spanning-tree interface Port-channel13
 show spanning-tree interface Port-channel23
 show etherchannel load-balance
+ping 192.168.23.2
 
 ```
 
