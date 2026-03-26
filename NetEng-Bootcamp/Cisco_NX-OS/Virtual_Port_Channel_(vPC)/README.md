@@ -103,6 +103,7 @@ feature lacp
 
 default interface Ethernet1/1
 default interface Ethernet1/2
+
 no interface port-channel1000
 
 interface Ethernet1/1 - 2
@@ -142,6 +143,7 @@ vlan 10
   name IOS-SWITCH
 
 default interface Ethernet1/3
+
 no interface port-channel10
 
 interface Ethernet1/3
@@ -195,6 +197,7 @@ vlan 20
   name SERVER
 
 default interface Ethernet1/4
+
 no interface port-channel 20
 
 interface Ethernet1/4
@@ -243,6 +246,16 @@ end
 
 <br>
 
+#### Verify ports are in a Bridge Assurance Inconsistent (BKN*) state
+```text
+# NX1 & NX2
+show spanning-tree interface port-channel 10
+show spanning-tree interface port-channel 20
+
+```
+
+<br>
+
 ```text
 # NX1 & NX2
 configure terminal
@@ -252,6 +265,17 @@ interface port-channel10
 interface port-channel20
   spanning-tree port type edge
   end
+
+```
+
+
+<br>
+
+#### Verify ports are operational again
+```text
+# NX1 & NX2
+show spanning-tree interface port-channel 10
+show spanning-tree interface port-channel 20
 
 ```
 
