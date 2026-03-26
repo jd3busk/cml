@@ -35,7 +35,7 @@ interface mgmt0
   ip address 192.168.255.1/24
   end
 
-````
+```
 
 <br>
 
@@ -46,6 +46,15 @@ interface mgmt0
   vrf member management
   ip address 192.168.255.2/24
   end
+
+```
+
+<br>
+
+#### Verification
+```text
+# NX1
+ping 192.168.255.2 vrf management count 5
 
 ```
 
