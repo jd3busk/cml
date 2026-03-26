@@ -29,49 +29,35 @@
 # SW1
 configure terminal
 interface range GigabitEthernet0/0 - 1
- channel-group 12 mode desirable
- 
-````
+  switchport
+  channel-group 12 mode desirable
+  no shutdown
 
+interface Port-channel 12
+  switchport trunk encapsulation dot1q
+  switchport mode trunk
+  end
+
+```
 <br>
 
 ```text
 # SW2
 configure terminal
 interface range GigabitEthernet0/0 - 1
- channel-group 12 mode auto
+  switchport
+  channel-group 12 mode auto
+  no shutdown
 
-```
-
-<br>
-
-### 2. Configure Port-channel 12 as a trunk
-
-<br>
-
-```text
-# SW1
 interface Port-channel 12
- switchport trunk encapsulation dot1q
- switchport mode trunk
- end
+  switchport trunk encapsulation dot1q
+  switchport mode trunk
+  end
 
 ```
-
 <br>
 
-```text
-# SW2
-interface Port-channel 12
- switchport trunk encapsulation dot1q
- switchport mode trunk
- end
-
-```
-
-<br>
-
-### 3. Configure LACP between SW1 and SW3
+### 2. Configure LACP between SW1 and SW3
 
 <br>
 
@@ -79,7 +65,14 @@ interface Port-channel 12
 # SW1
 configure terminal
 interface range GigabitEthernet0/2 - 3
- channel-group 13 mode active
+  switchport
+  channel-group 13 mode active
+  no shutdown
+
+interface Port-channel 13
+  switchport trunk encapsulation dot1q
+  switchport mode trunk
+  end
 
 ```
 
@@ -89,13 +82,20 @@ interface range GigabitEthernet0/2 - 3
 # SW3
 configure terminal
 interface range GigabitEthernet0/0 - 1
- channel-group 13 mode passive
+  switchport
+  channel-group 13 mode passive
+  no shutdown
+
+interface Port-channel 13
+  switchport trunk encapsulation dot1q
+  switchport mode trunk
+  end
 
 ```
 
 <br>
 
-### 4. Configure forced EtherChannel between SW2 and SW3
+### 4. Configure a forced EtherChannel between SW2 and SW3
 
 <br>
 
@@ -103,12 +103,14 @@ interface range GigabitEthernet0/0 - 1
 # SW2
 configure terminal
 interface range GigabitEthernet0/2 - 3
- channel-group 23 mode on
+  switchport
+  channel-group 23 mode on
+  no shutdown
 
 interface Port-channel 23
- switchport trunk encapsulation dot1q
- switchport mode trunk
- end
+  switchport trunk encapsulation dot1q
+  switchport mode trunk
+  end
 
 ```
 
@@ -118,38 +120,14 @@ interface Port-channel 23
 # SW3
 configure terminal
 interface range GigabitEthernet0/2 - 3
- channel-group 23 mode on
+  switchport
+  channel-group 23 mode on
+  no shutdown
 
 interface Port-channel 23
- switchport trunk encapsulation dot1q
- switchport mode trunk
- end
-
-```
-
-<br>
-
-### 5. Configure Port-channel 13 as a trunk
-
-<br>
-
-```text
-# SW1
-interface Port-channel 13
- switchport trunk encapsulation dot1q
- switchport mode trunk
- end
-
-```
-
-<br>
-
-```text
-# SW3
-interface Port-channel 13
- switchport trunk encapsulation dot1q
- switchport mode trunk
- end
+  switchport trunk encapsulation dot1q
+  switchport mode trunk
+  end
 
 ```
 
@@ -157,32 +135,12 @@ interface Port-channel 13
 
 ### 6. Change load-balancing to destination MAC
 
-> **NOTE:** Apply this on all three switches.
+> **NOTE:** This configuration only applies on the local switch.
 
 <br>
 
 ```text
-# SW1
-configure terminal
-port-channel load-balance dst-mac
-end
-
-```
-
-<br>
-
-```text
-# SW2
-configure terminal
-port-channel load-balance dst-mac
-end
-
-```
-
-<br>
-
-```text
-# SW3
+# SW1, SW2 & SW3
 configure terminal
 port-channel load-balance dst-mac
 end
