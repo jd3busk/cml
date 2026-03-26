@@ -103,6 +103,7 @@ feature lacp
 
 default interface Ethernet1/1
 default interface Ethernet1/2
+no interface port-channel1000
 
 interface Ethernet1/1 - 2
   shutdown
@@ -141,6 +142,7 @@ vlan 10
   name IOS-SWITCH
 
 default interface Ethernet1/3
+no interface port-channel10
 
 interface Ethernet1/3
   shutdown
@@ -193,6 +195,7 @@ vlan 20
   name SERVER
 
 default interface Ethernet1/4
+no interface port-channel 20
 
 interface Ethernet1/4
   shutdown
