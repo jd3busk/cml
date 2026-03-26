@@ -357,6 +357,7 @@ interface Vlan20
 
 <br>
 
+##### Verify that `NX` is HSRP Active
 ```text
 # NX1 & NX2
 show mac address-table dynamic vlan 10
@@ -368,6 +369,25 @@ show hsrp group 20
 
 <br>
 
+##### Start a continuous ping from `IOS-SWITCH` to `SERVER`
+```text
+# IOS-SWITCH
+ping 192.168.20.10 repeat 10000
+
+```
+
+<br>
+
+##### Make sure `NX1` is forwarding the packets
+```text
+# NX1 & NX2
+watch show interface Ethernet1/4 counters
+
+```
+
+<br>
+
+##### Lower `NX1`'s HSRP priority to 100
 ```text
 # NX1
 configure terminal
@@ -383,66 +403,18 @@ interface Vlan20
 
 <br>
 
+##### Verify `NX1` is not HSRP Standby
 ```text
 # NX1 & NX2
-show mac address-table dynamic vlan 10
-show mac address-table dynamic vlan 20
-show hsrp group 10
-show hsrp group 20
+show hsrp
+```
 
+<br>
+
+##### Verify `NX1` is still the one forwarding packets
+```text
+# NX1 & NX2
 watch show interface Ethernet1/4 counters
-
-```
-
-<br>
-
----
-
-<br>
-
-## Verification
-
-<br>
-
-> **Note 1:** Confirm that the vPC peer adjacency is formed successfully and that all port-channel members are bundled.
-
-> **Note 2:** Confirm that HSRP priorities, authentication, MAC learning, and ARP resolution are correct on both VLANs.
-
-<br>
-
-```text
-# NX1
-show vpc brief
-show vpc consistency-parameters vpc 10
-show port-channel summary
-show spanning-tree summary
-show spanning-tree interface Port-channel10
-show interface Vlan10
-show hsrp
-show mac address-table dynamic vlan 10
-show mac address-table dynamic vlan 20
-show ip arp
-ping 192.168.10.10 count 5 interval 1
-ping 192.168.20.10 count 5 interval 1
-
-```
-
-<br>
-
-```text
-# NX2
-show vpc brief
-show vpc consistency-parameters vpc 10
-show port-channel summary
-show spanning-tree summary
-show spanning-tree interface Port-channel10
-show interface Vlan10
-show hsrp
-show mac address-table dynamic vlan 10
-show mac address-table dynamic vlan 20
-show ip arp
-ping 192.168.10.10 count 5 interval 1
-ping 192.168.20.10 count 5 interval 1
 
 ```
 
