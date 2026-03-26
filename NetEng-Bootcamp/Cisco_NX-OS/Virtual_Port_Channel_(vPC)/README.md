@@ -407,6 +407,7 @@ interface Vlan20
 ```text
 # NX1 & NX2
 show hsrp
+
 ```
 
 <br>
