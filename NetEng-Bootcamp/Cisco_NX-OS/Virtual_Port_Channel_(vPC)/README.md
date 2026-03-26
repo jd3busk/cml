@@ -169,12 +169,14 @@ watch show vpc
 
 <br>
 
->##### NOTE: You may need to hit the [return] key a few times on the IOS-SWITCH.
+>##### NOTE: You may need to hit the [return] key a few times on the `IOS-SWITCH`.
 
 ```text
 # IOS-SWITCH
 
 
+
+show etherchannel summary
 
 ```
 
@@ -204,6 +206,19 @@ interface port-channel20
   vpc 20
   no shutdown
   end
+
+```
+
+<br>
+
+>##### NOTE: You may need to hit the [return] key a few times on the `SERVER`
+
+```text
+# SERVER
+
+
+
+show etherchannel summary
 
 ```
 
