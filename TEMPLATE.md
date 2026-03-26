@@ -26,9 +26,23 @@
 <br>
 
 ```text
-# On [DEVICE]
+# [DEVICE 1]
 [COMMANDS]
-````
+```
+
+<br>
+
+```text
+# [DEVICE 2]
+[COMMANDS]
+```
+
+<br>
+
+```text
+# [DEVICE 3]
+[COMMANDS]
+```
 
 <br>
 
@@ -37,7 +51,7 @@
 <br>
 
 ```text
-# On [DEVICE]
+# [DEVICE]
 [COMMANDS]
 ```
 
@@ -48,7 +62,7 @@
 <br>
 
 ```text
-# On [DEVICE]
+# [DEVICE]
 [COMMANDS]
 ```
 
@@ -59,7 +73,7 @@
 <br>
 
 ```text
-# On [DEVICE]
+# [DEVICE]
 [COMMANDS]
 ```
 
@@ -70,7 +84,21 @@
 <br>
 
 ```text
-# On [DEVICE]
+# [DEVICE 1]
+[COMMANDS]
+```
+
+<br>
+
+```text
+# [DEVICE 2]
+[COMMANDS]
+```
+
+<br>
+
+```text
+# [DEVICE 3]
 [COMMANDS]
 ```
 
@@ -78,10 +106,19 @@
 
 ### 6. [SOLUTION STEP 6 TITLE]
 
+> **NOTE:** [OPTIONAL NOTE]
+
 <br>
 
 ```text
-# On [DEVICE]
+# [DEVICE 1]
+[COMMANDS]
+```
+
+<br>
+
+```text
+# [DEVICE 2]
 [COMMANDS]
 ```
 
@@ -95,14 +132,28 @@
 
 <br>
 
-> **Note1:** [VERIFICATION NOTE 1]
+> **Note 1:** [VERIFICATION NOTE 1]
 
-> **Note2:** [VERIFICATION NOTE 2]
+> **Note 2:** [VERIFICATION NOTE 2]
 
 <br>
 
 ```text
-# On [DEVICE]
+# [DEVICE 1]
+[VERIFICATION COMMANDS]
+```
+
+<br>
+
+```text
+# [DEVICE 2]
+[VERIFICATION COMMANDS]
+```
+
+<br>
+
+```text
+# [DEVICE 3]
 [VERIFICATION COMMANDS]
 ```
 
@@ -116,6 +167,7 @@
 
 | Device     | Check        | Command     | Purpose   |
 | ---------- | ------------ | ----------- | --------- |
+| `[DEVICE]` | [CHECK NAME] | `[COMMAND]` | [PURPOSE] |
 | `[DEVICE]` | [CHECK NAME] | `[COMMAND]` | [PURPOSE] |
 | `[DEVICE]` | [CHECK NAME] | `[COMMAND]` | [PURPOSE] |
 | `[DEVICE]` | [CHECK NAME] | `[COMMAND]` | [PURPOSE] |
