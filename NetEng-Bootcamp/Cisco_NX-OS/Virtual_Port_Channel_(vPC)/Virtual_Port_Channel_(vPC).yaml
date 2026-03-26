@@ -31,6 +31,8 @@ nodes:
           rmon event 3 log trap public description ERROR(3) owner PMON@ERROR
           rmon event 4 log trap public description WARNING(4) owner PMON@WARNING
           rmon event 5 log trap public description INFORMATION(5) owner PMON@INFO
+          spanning-tree port type network default
+          spanning-tree vlan 1-1000 root primary
 
           vlan 1
 
@@ -248,6 +250,8 @@ nodes:
           rmon event 3 log trap public description ERROR(3) owner PMON@ERROR
           rmon event 4 log trap public description WARNING(4) owner PMON@WARNING
           rmon event 5 log trap public description INFORMATION(5) owner PMON@INFO
+          spanning-tree port type network default
+          spanning-tree vlan 1-1000 root secondary
 
           vlan 1
 
@@ -441,9 +445,9 @@ nodes:
         content: |-
           Building configuration...
 
-          Current configuration : 4254 bytes
+          Current configuration : 4261 bytes
           !
-          ! Last configuration change at 18:19:32 UTC Fri Jun 23 2023
+          ! Last configuration change at 15:13:25 UTC Thu Mar 26 2026
           !
           version 15.2
           service timestamps debug datetime msec
@@ -451,7 +455,7 @@ nodes:
           no service password-encryption
           service compress-config
           !
-          hostname SWITCH
+          hostname IOS-SWITCH
           !
           boot-start-marker
           boot-end-marker
@@ -556,7 +560,7 @@ nodes:
           !
           control-plane
           !
-          banner exec ^C
+          banner exec ^CC
           IOSv - Cisco Systems Confidential -
 
           Supplemental End User License Restrictions
@@ -565,7 +569,7 @@ nodes:
 
           By using the software, you agree to abide by the terms and conditions of the Cisco End User License Agreement at http://www.cisco.com/go/eula. Unauthorized use or distribution of this software is expressly prohibited.
           ^C
-          banner incoming ^C
+          banner incoming ^CC
           IOSv - Cisco Systems Confidential -
 
           Supplemental End User License Restrictions
@@ -574,7 +578,7 @@ nodes:
 
           By using the software, you agree to abide by the terms and conditions of the Cisco End User License Agreement at http://www.cisco.com/go/eula. Unauthorized use or distribution of this software is expressly prohibited.
           ^C
-          banner login ^C
+          banner login ^CC
           IOSv - Cisco Systems Confidential -
 
           Supplemental End User License Restrictions
@@ -610,7 +614,7 @@ nodes:
     hide_links: false
     id: n2
     image_definition: null
-    label: SWITCH
+    label: IOS-SWITCH
     node_definition: iosvl2
     parameters: {}
     ram: null
@@ -638,9 +642,9 @@ nodes:
         content: |-
           Building configuration...
 
-          Current configuration : 4483 bytes
+          Current configuration : 4486 bytes
           !
-          ! Last configuration change at 18:19:34 UTC Fri Jun 23 2023
+          ! Last configuration change at 15:12:51 UTC Thu Mar 26 2026
           !
           version 15.2
           service timestamps debug datetime msec
@@ -760,7 +764,7 @@ nodes:
           !
           control-plane
           !
-          banner exec ^C
+          banner exec ^CC
           IOSv - Cisco Systems Confidential -
 
           Supplemental End User License Restrictions
@@ -769,7 +773,7 @@ nodes:
 
           By using the software, you agree to abide by the terms and conditions of the Cisco End User License Agreement at http://www.cisco.com/go/eula. Unauthorized use or distribution of this software is expressly prohibited.
           ^C
-          banner incoming ^C
+          banner incoming ^CC
           IOSv - Cisco Systems Confidential -
 
           Supplemental End User License Restrictions
@@ -778,7 +782,7 @@ nodes:
 
           By using the software, you agree to abide by the terms and conditions of the Cisco End User License Agreement at http://www.cisco.com/go/eula. Unauthorized use or distribution of this software is expressly prohibited.
           ^C
-          banner login ^C
+          banner login ^CC
           IOSv - Cisco Systems Confidential -
 
           Supplemental End User License Restrictions
@@ -836,6 +840,62 @@ nodes:
         mac_address: null
         type: physical
         slot: 1
+  - boot_disk_size: null
+    configuration: []
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: true
+    id: n4
+    image_definition: null
+    label: Management
+    node_definition: unmanaged_switch
+    parameters: {}
+    ram: null
+    tags: []
+    x: -480
+    y: -160
+    interfaces:
+      - id: i0
+        label: port0
+        mac_address: null
+        type: physical
+        slot: 0
+      - id: i1
+        label: port1
+        mac_address: null
+        type: physical
+        slot: 1
+      - id: i2
+        label: port2
+        mac_address: null
+        type: physical
+        slot: 2
+      - id: i3
+        label: port3
+        mac_address: null
+        type: physical
+        slot: 3
+      - id: i4
+        label: port4
+        mac_address: null
+        type: physical
+        slot: 4
+      - id: i5
+        label: port5
+        mac_address: null
+        type: physical
+        slot: 5
+      - id: i6
+        label: port6
+        mac_address: null
+        type: physical
+        slot: 6
+      - id: i7
+        label: port7
+        mac_address: null
+        type: physical
+        slot: 7
 links:
   - id: l0
     n1: n0
@@ -868,24 +928,31 @@ links:
   - id: l4
     n1: n0
     n2: n1
-    i1: i1
-    i2: i1
-    conditioning: {}
-    label: NX1-mgmt0<->NX2-mgmt0
-  - id: l5
-    n1: n0
-    n2: n1
     i1: i2
     i2: i2
     conditioning: {}
     label: NX1-Ethernet1/1<->NX2-Ethernet1/1
-  - id: l6
+  - id: l5
     n1: n0
     n2: n1
     i1: i3
     i2: i3
     conditioning: {}
     label: NX1-Ethernet1/2<->NX2-Ethernet1/2
+  - id: l6
+    n1: n0
+    n2: n4
+    i1: i1
+    i2: i0
+    conditioning: {}
+    label: NX1-mgmt0<->Management-port0
+  - id: l7
+    n1: n1
+    n2: n4
+    i1: i1
+    i2: i1
+    conditioning: {}
+    label: NX2-mgmt0<->Management-port1
 lab:
   description: ''
   notes: |-
@@ -922,11 +989,11 @@ lab:
     # NX1
     configure terminal
     interface mgmt0
-     vrf member management
-     ip address 192.168.255.1/24
-     end
+      vrf member management
+      ip address 192.168.255.1/24
+      end
 
-    ````
+    ```
 
     <br>
 
@@ -934,9 +1001,18 @@ lab:
     # NX2
     configure terminal
     interface mgmt0
-     vrf member management
-     ip address 192.168.255.2/24
-     end
+      vrf member management
+      ip address 192.168.255.2/24
+      end
+
+    ```
+
+    <br>
+
+    #### Verification
+    ```text
+    # NX1
+    ping 192.168.255.2 vrf management count 5
 
     ```
 
@@ -952,9 +1028,9 @@ lab:
     feature vpc
 
     vpc domain 1
-     role priority 1
-     peer-keepalive destination 192.168.255.2 source 192.168.255.1
-     end
+      role priority 1
+      peer-keepalive destination 192.168.255.2 source 192.168.255.1
+      end
 
     ```
 
@@ -966,9 +1042,9 @@ lab:
     feature vpc
 
     vpc domain 1
-     role priority 2
-     peer-keepalive destination 192.168.255.1 source 192.168.255.2
-     end
+      role priority 2
+      peer-keepalive destination 192.168.255.1 source 192.168.255.2
+      end
 
     ```
 
@@ -983,21 +1059,38 @@ lab:
     configure terminal
     feature lacp
 
+    default interface Ethernet1/1
+    default interface Ethernet1/2
+
+    no interface port-channel1000
+
     interface Ethernet1/1 - 2
-     switchport
-     channel-group 1000 mode active
+      shutdown
+      switchport
+      channel-group 1000 mode active
+      no shutdown
 
     interface port-channel1000
-     switchport mode trunk
-     spanning-tree port type network
-     vpc peer-link
-     end
+      switchport mode trunk
+      vpc peer-link
+      no shutdown
+      end
 
     ```
 
     <br>
 
-    ### 4. Configure vPC 10 Toward SWITCH
+    #### Verification
+    ```text
+    # NX1
+    terminal length 0
+    watch show vpc
+
+    ```
+
+    <br>
+
+    ### 4. Configure vPC 10 Toward the IOS-SWITCH
 
     <br>
 
@@ -1005,18 +1098,47 @@ lab:
     # NX1 & NX2
     configure terminal
     vlan 10
-     name SWITCH
+      name IOS-SWITCH
+
+    default interface Ethernet1/3
+
+    no interface port-channel10
 
     interface Ethernet1/3
-     switchport
-     channel-group 10 mode active
-     no shutdown
+      shutdown
+      switchport
+      channel-group 10 mode active
+      no shutdown
 
     interface port-channel10
-     switchport mode trunk
-     switchport trunk allowed vlan 10
-     vpc 10
-     end
+      switchport mode trunk
+      switchport trunk allowed vlan 10
+      vpc 10
+      no shutdown
+      end
+
+    ```
+
+    <br>
+
+    #### Verification
+    ```text
+    # NX1
+    terminal length 0
+    watch show vpc
+
+    ```
+
+    <br>
+
+    >##### NOTE: You may need to hit the [return] key a few times on the `IOS-SWITCH`.
+
+    ```text
+    # IOS-SWITCH
+
+
+
+    show etherchannel summary
 
     ```
 
@@ -1030,26 +1152,37 @@ lab:
     # NX1 & NX2
     configure terminal
     vlan 20
-     name SERVER
+      name SERVER
+
+    default interface Ethernet1/4
+
+    no interface port-channel 20
 
     interface Ethernet1/4
-     switchport
-     channel-group 20 mode active
-     no shutdown
+      shutdown
+      switchport
+      channel-group 20 mode active
+      no shutdown
 
     interface port-channel20
-     switchport mode access
-     switchport access vlan 20
-     vpc 20
-     end
+      switchport mode access
+      switchport access vlan 20
+      vpc 20
+      no shutdown
+      end
 
     ```
 
     <br>
 
+    >##### NOTE: You may need to hit the [return] key a few times on the `SERVER`
+
     ```text
     # SERVER
-    ping 192.168.10.10
+
+
+
+    show etherchannel summary
 
     ```
 
@@ -1071,15 +1204,36 @@ lab:
 
     <br>
 
+    #### Verify ports are in a Bridge Assurance Inconsistent (BKN*) state
+    ```text
+    # NX1 & NX2
+    show spanning-tree interface port-channel 10
+    show spanning-tree interface port-channel 20
+
+    ```
+
+    <br>
+
     ```text
     # NX1 & NX2
     configure terminal
     interface port-channel10
-     spanning-tree port type normal
+      spanning-tree port type normal
 
     interface port-channel20
-     spanning-tree port type edge
-     end
+      spanning-tree port type edge
+      end
+
+    ```
+
+
+    <br>
+
+    #### Verify ports are operational again
+    ```text
+    # NX1 & NX2
+    show spanning-tree interface port-channel 10
+    show spanning-tree interface port-channel 20
 
     ```
 
@@ -1096,28 +1250,28 @@ lab:
     feature hsrp
 
     vpc domain 1
-     peer-gateway
+      peer-gateway
 
     interface Vlan10
-     no shutdown
-     ip address 192.168.10.2/24
-     hsrp version 2
-     hsrp 10
-      authentication text pa55w0rd
-      preempt
-      priority 200
-      ip 192.168.10.1
+      no shutdown
+      ip address 192.168.10.2/24
+      hsrp version 2
+      hsrp 10
+        authentication text pa55w0rd
+        preempt
+        priority 200
+        ip 192.168.10.1
 
     interface Vlan20
-     no shutdown
-     ip address 192.168.20.2/24
-     hsrp version 2
-     hsrp 20
-      authentication text pa55w0rd
-      preempt
-      priority 200
-      ip 192.168.20.1
-     end
+      no shutdown
+      ip address 192.168.20.2/24
+      hsrp version 2
+      hsrp 20
+        authentication text pa55w0rd
+        preempt
+        priority 200
+        ip 192.168.20.1
+      end
 
     ```
 
@@ -1130,36 +1284,28 @@ lab:
     feature hsrp
 
     vpc domain 1
-     peer-gateway
+      peer-gateway
 
     interface Vlan10
-     no shutdown
-     ip address 192.168.10.3/24
-     hsrp version 2
-     hsrp 10
-      authentication text pa55w0rd
-      preempt
-      priority 150
-      ip 192.168.10.1
+      no shutdown
+      ip address 192.168.10.3/24
+      hsrp version 2
+      hsrp 10
+        authentication text pa55w0rd
+        preempt
+        priority 150
+        ip 192.168.10.1
 
     interface Vlan20
-     no shutdown
-     ip address 192.168.20.3/24
-     hsrp version 2
-     hsrp 20
-      authentication text pa55w0rd
-      preempt
-      priority 150
-      ip 192.168.20.1
-     end
-
-    ```
-
-    <br>
-
-    ```text
-    # SERVER
-    ping 192.168.10.10
+      no shutdown
+      ip address 192.168.20.3/24
+      hsrp version 2
+      hsrp 20
+        authentication text pa55w0rd
+        preempt
+        priority 150
+        ip 192.168.20.1
+      end
 
     ```
 
@@ -1169,6 +1315,7 @@ lab:
 
     <br>
 
+    ##### Verify that `NX` is HSRP Active
     ```text
     # NX1 & NX2
     show mac address-table dynamic vlan 10
@@ -1180,85 +1327,53 @@ lab:
 
     <br>
 
+    ##### Start a continuous ping from `IOS-SWITCH` to `SERVER`
     ```text
-    # NX1
-    configure terminal
-    interface Vlan10
-     hsrp 10
-      priority 100
-
-    interface Vlan20
-     hsrp 20
-      priority 100
+    # IOS-SWITCH
+    ping 192.168.20.10 repeat 10000
 
     ```
 
     <br>
 
+    ##### Make sure `NX1` is forwarding the packets
     ```text
     # NX1 & NX2
-    show mac address-table dynamic vlan 10
-    show mac address-table dynamic vlan 20
-    show hsrp group 10
-    show hsrp group 20
-
     watch show interface Ethernet1/4 counters
 
     ```
 
     <br>
 
-    ---
-
-    <br>
-
-    ## Verification
-
-    <br>
-
-    > **Note 1:** Confirm that the vPC peer adjacency is formed successfully and that all port-channel members are bundled.
-
-    > **Note 2:** Confirm that HSRP priorities, authentication, MAC learning, and ARP resolution are correct on both VLANs.
-
-    <br>
-
+    ##### Lower `NX1`'s HSRP priority to 100
     ```text
     # NX1
-    show vpc brief
-    show vpc consistency-parameters vpc 10
-    show port-channel summary
-    show spanning-tree summary
-    show spanning-tree interface Port-channel10
-    show interface Vlan10
-    show hsrp
-    show mac address-table dynamic vlan 10
-    show mac address-table dynamic vlan 20
-    show ip arp
+    configure terminal
+    interface Vlan10
+      hsrp 10
+        priority 100
+
+    interface Vlan20
+      hsrp 20
+        priority 100
 
     ```
 
     <br>
 
+    ##### Verify `NX1` is not HSRP Standby
     ```text
-    # NX2
-    show vpc brief
-    show vpc consistency-parameters vpc 10
-    show port-channel summary
-    show spanning-tree summary
-    show spanning-tree interface Port-channel10
-    show interface Vlan10
+    # NX1 & NX2
     show hsrp
-    show mac address-table dynamic vlan 10
-    show mac address-table dynamic vlan 20
-    show ip arp
 
     ```
 
     <br>
 
+    ##### Verify `NX1` is still the one forwarding packets
     ```text
-    # SERVER
-    ping 192.168.10.10
+    # NX1 & NX2
+    watch show interface Ethernet1/4 counters
 
     ```
 
@@ -1272,8 +1387,8 @@ lab:
 
     | Device      | Check                       | Command                                       | Purpose                                                            |              |                                                 |
     | ----------- | --------------------------- | --------------------------------------------- | ------------------------------------------------------------------ | ------------ | ----------------------------------------------- |
-    | `NX1`       | Management Interface Status | `show ip interface brief vrf management`      | Ensure mgmt0 is in the correct VRF and has the correct IP address. |              |                                                 |
-    | `NX1`       | Management Reachability     | `ping 192.168.255.2 vrf management`           | Ensure NX1 can reach the mgmt0 interface of NX2.                   |              |                                                 |
+    | `NX1/NX2`       | Management Interface Status | `show ip interface brief vrf management`      | Ensure mgmt0 is in the correct VRF and has the correct IP address. |              |                                                 |
+    | `NX1/NX2`       | Management Reachability     | `ping 192.168.255.2 vrf management`           | Ensure NX1 can reach the mgmt0 interface of NX2.                   |              |                                                 |
     | `NX1/NX2` | vPC Domain Configuration    | `show running-config                          | section 'feature                                                   | vpc domain'` | Ensure the vPC domain configuration is correct. |
     | `NX1/NX2` | vPC Peer Status             | `show vpc brief`                              | Ensure the peer adjacency was formed successfully.                 |              |                                                 |
     | `NX1/NX2` | vPC Consistency             | `show vpc consistency-parameters vpc 10`      | Ensure the vPC configuration is synchronized on both switches.     |              |                                                 |
