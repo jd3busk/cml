@@ -11,4 +11,4 @@
 <br>
 
 ## Cisco NX-OS Labs:
->1. [Virtual Port-Channel (vPC)](./Cisco_NX-OS/Virtual_Port-Channel_(vPC))
+>1. [Virtual Port Channel (vPC)](./Cisco_NX-OS/Virtual_Port_Channel_(vPC))
