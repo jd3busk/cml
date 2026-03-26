@@ -117,25 +117,7 @@ end
 <br>
 
 ```text
-# CSW
-configure terminal
-vtp domain LAB
-vtp password LAB
-end
-
-```
-
-```text
-# DSW
-configure terminal
-vtp domain LAB
-vtp password LAB
-end
-
-```
-
-```text
-# ASW
+# CSW, DSW & ASW
 configure terminal
 vtp domain LAB
 vtp password LAB
@@ -147,19 +129,21 @@ end
 
 ### 6. Ensure VLANs 10, 20, and 30 exist on all switches.
 
-> **NOTE:** **CSW** will advertise VLAN changes to **VTP clients**, but **DSW** is in **transparent mode**, so it only forwards those updates and does not apply them locally. VLANs must therefore also be created manually on **DSW**.
-
 <br>
 
 ```text
 # CSW
 configure terminal
-vlan 10
-vlan 20
-vlan 30
+vlan 10, 20, 30
 end
 
 ```
+
+<br>
+
+> **NOTE:** **CSW** will advertise VLAN changes to **VTP clients**, but **DSW** is in **transparent mode**, so it only forwards those updates and does not apply them locally. VLANs must therefore also be created manually on **DSW**.
+
+<br>
 
 ```text
 # DSW
@@ -188,25 +172,7 @@ end
 <br>
 
 ```text
-# CSW
-show vtp status | include version running|Domain
-show vtp password
-show vlan brief
-show vtp status | include Revision
-
-```
-
-```text
-# DSW
-show vtp status | include version running|Domain
-show vtp password
-show vlan brief
-show vtp status | include Revision
-
-```
-
-```text
-# ASW
+# CSW, DSW & ASW
 show vtp status | include version running|Domain
 show vtp password
 show vlan brief
