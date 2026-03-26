@@ -34,7 +34,11 @@ interface GigabitEthernet0/0
  switchport trunk encapsulation dot1q
  switchport mode trunk
 end
+````
 
+<br>
+
+```text
 # DSW
 configure terminal
 interface range GigabitEthernet0/0 - 1
@@ -43,7 +47,11 @@ interface range GigabitEthernet0/0 - 1
  switchport trunk encapsulation dot1q
  switchport mode trunk
 end
+```
 
+<br>
+
+```text
 # ASW
 configure terminal
 interface GigabitEthernet0/0
@@ -52,7 +60,7 @@ interface GigabitEthernet0/0
  switchport trunk encapsulation dot1q
  switchport mode trunk
 end
-````
+```
 
 <br>
 
@@ -103,7 +111,23 @@ end
 <br>
 
 ```text
-# CSW, DSW & ASW
+# CSW
+configure terminal
+vtp domain LAB
+vtp password LAB
+end
+```
+
+```text
+# DSW
+configure terminal
+vtp domain LAB
+vtp password LAB
+end
+```
+
+```text
+# ASW
 configure terminal
 vtp domain LAB
 vtp password LAB
@@ -114,12 +138,25 @@ end
 
 ### 6. Ensure VLANs 10, 20, and 30 exist on all switches.
 
+> **NOTE:** **CSW** will advertise VLAN changes to **VTP clients**, but **DSW** is in **transparent mode**, so it only forwards those updates and does not apply them locally. VLANs must therefore also be created manually on **DSW**.
+
 <br>
 
 ```text
-# CSW & DSW
+# CSW
 configure terminal
-vlan 10,20,30
+vlan 10
+vlan 20
+vlan 30
+end
+```
+
+```text
+# DSW
+configure terminal
+vlan 10
+vlan 20
+vlan 30
 end
 ```
 
@@ -140,7 +177,23 @@ end
 <br>
 
 ```text
-# CSW, DSW & ASW
+# CSW
+show vtp status | include version running|Domain
+show vtp password
+show vlan brief
+show vtp status | include Revision
+```
+
+```text
+# DSW
+show vtp status | include version running|Domain
+show vtp password
+show vlan brief
+show vtp status | include Revision
+```
+
+```text
+# ASW
 show vtp status | include version running|Domain
 show vtp password
 show vlan brief
