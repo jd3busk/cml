@@ -461,7 +461,7 @@ show spanning-tree interface GigabitEthernet0/3
 
 <br>
 
-### 12. Prevent ROGUE access switches from connecting to the network
+### 13. Prevent ROGUE access switches from connecting to the network
 
 <br>
 
