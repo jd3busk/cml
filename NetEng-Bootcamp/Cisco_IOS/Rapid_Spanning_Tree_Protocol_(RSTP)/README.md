@@ -248,7 +248,7 @@ show spanning-tree vlan 20 detail | include VLAN0020|port id
 ```text
 # ASW2
 show spanning-tree vlan 40
-show spanning-tree vlan 40 detail | include VLAN0040|path cost
+show spanning-tree vlan 40 detail | include VLAN0040|Port path cost
 
 ```
 
@@ -269,7 +269,7 @@ end
 ```text
 # ASW2
 show spanning-tree vlan 40
-show spanning-tree vlan 40 detail | include VLAN0040|path cost
+show spanning-tree vlan 40 detail | include VLAN0040|Port path cost
 
 ```
 
