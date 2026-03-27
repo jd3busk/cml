@@ -436,7 +436,7 @@ show spanning-tree inconsistentports
 
 <br>
 
-### 12. Ensure ASW1's Edge Ports immediately and safely transitions to the forwarding state.
+### 12. Ensure ASW1's Edge Ports immediately transitions to the forwarding state.
 
 <br>
 
@@ -445,9 +445,43 @@ show spanning-tree inconsistentports
 configure terminal
 interface range GigabitEthernet0/2 - 3
  spanning-tree portfast edge
+ no shutdown
+end
+
+```
+<br>
+
+#### Verify that ASW1's Gi0/2 and Gi0/3 ports transitioned to FWD state
+```text
+# ASW1
+show spanning-tree interface GigabitEthernet0/2
+show spanning-tree interface GigabitEthernet0/3
+
+```
+
+<br>
+
+### 12. Prevent ROGUE access switches from connecting to the network
+
+<br>
+
+```text
+# ASW1
+configure terminal
+interface range GigabitEthernet0/2 - 3
  spanning-tree bpduguard enable
  no shutdown
 end
+
+```
+<br>
+
+#### Verify that BPDUGuard triggered on ASW1's Gi0/3 port
+```text
+# ASW1
+show interface status err-disabled
+show spanning-tree interface GigabitEthernet0/2
+show spanning-tree interface GigabitEthernet0/3
 
 ```
 
