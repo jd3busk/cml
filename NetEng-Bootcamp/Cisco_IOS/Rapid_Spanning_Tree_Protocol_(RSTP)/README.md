@@ -38,6 +38,16 @@ end
 
 ```
 
+
+<br>
+
+#### Verify Rapid PVST is now operational
+```text
+# DSW1, DSW2, ASW1 & ASW2
+show spanning-tree summary | include ^Switch is in
+
+```
+
 <br>
 
 ### 2. Ensure DSW1 is the root bridge for VLAN 10, and DSW2 is its backup. (Use ‘spanning-tree root’)
