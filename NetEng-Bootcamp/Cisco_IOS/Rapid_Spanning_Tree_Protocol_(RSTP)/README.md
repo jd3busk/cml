@@ -199,6 +199,7 @@ end
 ```text
 # ASW1
 show spanning-tree vlan 10 | section ID
+show spanning-tree vlan 10 detail | section Spanning Tree
 
 ```
 
