@@ -280,27 +280,10 @@ show spanning-tree vlan 40 detail | include VLAN0040|Port path cost
 <br>
 
 ```text
-# DSW1
+# DSW1 & DSW2
 configure terminal
 interface GigabitEthernet0/1
  switchport trunk allowed vlan 10,30
-
-interface GigabitEthernet0/2
- switchport trunk allowed vlan 20,40
-end
-
-```
-
-<br>
-
-```text
-# DSW2
-configure terminal
-interface GigabitEthernet0/1
- switchport trunk allowed vlan 10,30
-
-interface range GigabitEthernet0/2 - 3
- switchport trunk allowed vlan 20,40
 end
 
 ```
