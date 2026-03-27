@@ -198,13 +198,23 @@ end
 #### Verify VLAN 10's hello timer propogated
 ```text
 # ASW1
-show spanning-tree vlan 10 | section Root ID
+show spanning-tree vlan 10
 
 ```
 
 <br>
 
 ### 7. From DSW2, ensure ASW2's GigabitEthernet0/2 is used to reach the root bridge only for VLAN 20.
+
+<br>
+
+#### Verify ASW2's GigabitEthernet0/1 is preferred for VLAN 20
+```text
+# ASW2
+show spanning-tree vlan 20
+show spanning-tree vlan 20 detail | include VLAN0020|port id
+
+```
 
 <br>
 
@@ -219,16 +229,27 @@ end
 
 <br>
 
-#### Verify ASW2's GigabitEthernet0/2 is preferred for VLAN 20
+#### Verify ASW2's GigabitEthernet0/2 is now preferred for VLAN 20
 ```text
 # ASW2
 show spanning-tree vlan 20
+show spanning-tree vlan 20 detail | include VLAN0020|port id
 
 ```
 
 <br>
 
 ### 8. From ASW2, ensure ASW2's GigabitEthernet0/2 is used to reach the root bridge for VLAN 40.
+
+<br>
+
+#### Verify ASW2's GigabitEthernet0/1 is preferred for VLAN 40
+```text
+# ASW2
+show spanning-tree vlan 40
+show spanning-tree vlan 40 detail | include VLAN0040|path cost
+
+```
 
 <br>
 
@@ -243,7 +264,105 @@ end
 
 <br>
 
-### 9. Protect DSW1 & 2 from receiving any superior BPDUs from either access switch.
+#### Verify ASW2's GigabitEthernet0/2 is now preferred for VLAN 40
+```text
+# ASW2
+show spanning-tree vlan 40
+show spanning-tree vlan 40 detail | include VLAN0040|path cost
+
+```
+
+<br>
+
+### 9. On DSW1 & DSW2, only allow VLANs 10 & 30 toward ASW1
+
+<br>
+
+```text
+# DSW1
+configure terminal
+interface GigabitEthernet0/1
+ switchport trunk allowed vlan 10,30
+
+interface GigabitEthernet0/2
+ switchport trunk allowed vlan 20,40
+end
+
+```
+
+<br>
+
+```text
+# DSW2
+configure terminal
+interface GigabitEthernet0/1
+ switchport trunk allowed vlan 10,30
+
+interface range GigabitEthernet0/2 - 3
+ switchport trunk allowed vlan 20,40
+end
+
+```
+
+<br>
+
+#### Verify that only VLANs 10 & 30 are allowed toward ASW2
+```text
+# DSW1 & DSW2
+show spanning-tree interface GigabitEthernet0/1
+show interfaces trunk | include Port|Gi0/1
+
+```
+
+<br>
+
+### 10. On DSW1 & DSW2, only allow VLANs 20 & 40 toward ASW2
+
+<br>
+
+```text
+# DSW1
+configure terminal
+interface GigabitEthernet0/2
+ switchport trunk allowed vlan 20,40
+end
+
+```
+
+<br>
+
+```text
+# DSW2
+configure terminal
+interface range GigabitEthernet0/2 - 3
+ switchport trunk allowed vlan 20,40
+end
+
+```
+
+<br>
+
+#### Verify that only VLANs 20 & 40 are allowed toward ASW2
+```text
+# DSW1
+show spanning-tree interface GigabitEthernet0/2
+show interfaces trunk | include Port|Gi0/2
+
+```
+
+<br>
+
+```text
+# DSW2
+show spanning-tree interface GigabitEthernet0/2
+show spanning-tree interface GigabitEthernet0/3
+show interfaces trunk | include Port|Gi0/2|Gi0/3
+
+```
+
+<br>
+
+### 11. Protect DSW1 & 2 from receiving any superior BPDUs from either access switch.
 
 <br>
 
@@ -269,49 +388,19 @@ end
 
 <br>
 
+#### Test DSW1 & DSW2's Root Guard configuration by setting ASW1 as VLAN 10's root
 ```text
 # ASW1
 configure terminal
-spanning-tree vlan 1 priority 0
+spanning-tree vlan 10 priority 0
 end
 
 ```
 
 <br>
 
-### 10. From DSW1 & 2, only allow VLANs 10 & 30 toward ASW1 and VLANs 20 & 40 toward ASW2.
 
-<br>
-
-```text
-# DSW1
-configure terminal
-interface GigabitEthernet0/1
- switchport trunk allowed vlan 10,20
-
-interface GigabitEthernet0/2
- switchport trunk allowed vlan 20,40
-end
-
-```
-
-<br>
-
-```text
-# DSW2
-configure terminal
-interface GigabitEthernet0/1
- switchport trunk allowed vlan 10,20
-
-interface range GigabitEthernet0/2 - 3
- switchport trunk allowed vlan 20,40
-end
-
-```
-
-<br>
-
-### 11. Ensure PC-1's switchport immediately and safely transitions to the forwarding state.
+### 12. Ensure PC-1's switchport immediately and safely transitions to the forwarding state.
 
 <br>
 
