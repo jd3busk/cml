@@ -75,8 +75,8 @@ end
 
 #### Verify DSW1 is root for VLAN 10
 ```text
-# DSW1, DSW2, ASW1 & ASW2
-show spanning-tree vlan 10
+# DSW1, DSW2 & ASW1
+show spanning-tree vlan 10 | section Root ID
 
 ```
 
@@ -108,8 +108,8 @@ end
 
 #### Verify DSW2 is root for VLAN 20
 ```text
-# DSW1, DSW2, ASW1 & ASW2
-show spanning-tree vlan 20
+# DSW1, DSW2 & ASW2
+show spanning-tree vlan 20 | section Root ID
 
 ```
 
@@ -141,8 +141,8 @@ end
 
 #### Verify DSW1 is root for VLAN 30
 ```text
-# DSW1, DSW2, ASW1 & ASW2
-show spanning-tree vlan 30
+# DSW1, DSW2 & ASW1
+show spanning-tree vlan 30 | section Root ID
 
 ```
 
@@ -174,8 +174,8 @@ end
 
 #### Verify DSW2 is root for VLAN 40
 ```text
-# DSW1, DSW2, ASW1 & ASW2
-show spanning-tree vlan 40
+# DSW1, DSW2 & ASW2
+show spanning-tree vlan 40 | section Root ID
 
 ```
 
@@ -198,7 +198,7 @@ end
 #### Verify VLAN 10's hello timer propogated
 ```text
 # ASW1
-show spanning-tree vlan 10
+show spanning-tree vlan 10 | section Root ID
 
 ```
 
