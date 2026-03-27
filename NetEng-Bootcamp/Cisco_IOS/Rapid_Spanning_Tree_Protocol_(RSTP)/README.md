@@ -76,6 +76,7 @@ end
 #### Verify DSW1 is root for VLAN 10
 ```text
 # DSW1, DSW2 & ASW1
+show spanning-tree bridge
 show spanning-tree vlan 10 | section ID
 
 ```
@@ -109,6 +110,7 @@ end
 #### Verify DSW2 is root for VLAN 20
 ```text
 # DSW1, DSW2 & ASW2
+show spanning-tree bridge
 show spanning-tree vlan 20 | section ID
 
 ```
@@ -142,6 +144,7 @@ end
 #### Verify DSW1 is root for VLAN 30
 ```text
 # DSW1, DSW2 & ASW1
+show spanning-tree bridge
 show spanning-tree vlan 30 | section ID
 
 ```
@@ -175,6 +178,7 @@ end
 #### Verify DSW2 is root for VLAN 40
 ```text
 # DSW1, DSW2 & ASW2
+show spanning-tree bridge
 show spanning-tree vlan 40 | section ID
 
 ```
@@ -198,6 +202,7 @@ end
 #### Verify VLAN 10's hello timer propogated
 ```text
 # ASW1
+show spanning-tree bridge
 show spanning-tree vlan 10 | section ID
 show spanning-tree vlan 10 detail | section Spanning Tree
 
@@ -258,7 +263,7 @@ show spanning-tree vlan 40 detail | include VLAN0040|Port path cost
 # ASW2
 configure terminal
 interface GigabitEthernet0/2
- spanning-tree vlan 40 cost 1
+ spanning-tree vlan 40 cost 3
 end
 
 ```
@@ -372,6 +377,28 @@ end
 
 <br>
 
+<br>
+
+#### Verify that Root Guard is enabled
+```text
+# DSW1
+show spanning-tree interface Gi0/1 detail | include VLAN|Root guard
+show spanning-tree interface Gi0/2 detail | include VLAN|Root guard
+
+```
+
+<br>
+
+```text
+# DSW2
+show spanning-tree interface Gi0/1 detail | include VLAN|Root guard
+show spanning-tree interface Gi0/2 detail | include VLAN|Root guard
+show spanning-tree interface Gi0/3 detail | include VLAN|Root guard
+
+```
+
+<br>
+
 #### Test DSW1 & DSW2's Root Guard configuration by setting ASW1 as VLAN 10's root
 ```text
 # ASW1
@@ -383,16 +410,24 @@ end
 
 <br>
 
+#### Verify that Root Guard was triggered on DSW1 and DSW2 for VLAN 10
+```text
+# DSW1 & DSW2
+show spanning-tree interface GigabitEthernet0/1
+show spanning-tree inconsistentports
 
-### 12. Ensure PC-1's switchport immediately and safely transitions to the forwarding state.
+```
+
+<br>
+
+### 12. Ensure ASW1's Edge Ports immediately and safely transitions to the forwarding state.
 
 <br>
 
 ```text
 # ASW1
 configure terminal
-interface GigabitEthernet0/2
- shutdown
+interface range GigabitEthernet0/2 - 3
  spanning-tree portfast edge
  spanning-tree bpduguard enable
  no shutdown
