@@ -322,17 +322,17 @@ show spanning-tree interface GigabitEthernet0/2 detail
 
 ## Troubleshooting
 
-| Device        | Check                      | Command                                                  | Purpose                                                                         |                                                                  |
-| ------------- | -------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| `ASW1 / ASW2` | Port Status                | `show interfaces status`                                 | Ensure that the ports are not disabled.                                         |                                                                  |
-| `ASW1 / ASW2` | Interface Status           | `show interface GigabitEthernet0/1`                      | Ensure that the ports are not disabled.                                         |                                                                  |
-| `ASW1 / ASW2` | Switchport Mode            | `show interface GigabitEthernet0/1 switchport`           | Ensure the port is in the correct ‘operational mode’.                           |                                                                  |
-| `DSW1 / DSW2` | STP Protocol               | `show spanning-tree bridge protocol`                     | Ensure that the switch is running in RSTP mode for all VLANs.                   |                                                                  |
-| `DSW1 / DSW2` | Root Bridge                | `show spanning-tree root`                                | Ensure that the proper switch is ROOT (won’t have any Root Ports).              |                                                                  |
-| `DSW1 / DSW2` | VLAN 10 Forwarding         | `show spanning-tree vlan 10`                             | Ensure spanning-tree is forwarding on the correct ports.                        |                                                                  |
-| `DSW1`        | Hello Timer Propagation    | `show spanning-tree vlan 10 \| section Root ID`                                                                | Ensure the Root Bridge has told everyone of the new Hello Timer. |
-| `DSW2`        | VLAN 20 Path Selection     | `show spanning-tree detail \| section VLAN0020`                                                               | Review the “Port path cost” and “Designated port id”.            |
-| `DSW1 / DSW2` | Root Guard State           | `show spanning-tree inconsistentports`                   | Ensure Rootguard is triggered by a superior BPDUs received on downstream ports. |                                                                  |
-| `DSW1 / DSW2` | Root Guard Interface Check | `show spanning-tree interface GigabitEthernet0/2`        | Ensure Rootguard is triggered by a superior BPDUs received on downstream ports. |                                                                  |
-| `ASW1`        | PortFast Edge Type         | `show spanning-tree interface GigabitEthernet0/2`        | Ensure that the portfast enabled port shows as a “P2p Edge” type.               |                                                                  |
-| `ASW1`        | BPDU Receipt Check         | `show spanning-tree interface GigabitEthernet0/2 detail` | Ensure that the PC-facing edge port has not received any BPDUs.                 |                                                                  |
+| Device        | Check                      | Command                                                  | Purpose                                                                         |
+| ------------- | -------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `ASW1 / ASW2` | Port Status                | `show interfaces status`                                 | Ensure that the ports are not disabled.                                         |
+| `ASW1 / ASW2` | Interface Status           | `show interface GigabitEthernet0/1`                      | Ensure that the ports are not disabled.                                         |
+| `ASW1 / ASW2` | Switchport Mode            | `show interface GigabitEthernet0/1 switchport`           | Ensure the port is in the correct ‘operational mode’.                           |
+| `DSW1 / DSW2` | STP Protocol               | `show spanning-tree bridge protocol`                     | Ensure that the switch is running in RSTP mode for all VLANs.                   |
+| `DSW1 / DSW2` | Root Bridge                | `show spanning-tree root`                                | Ensure that the proper switch is ROOT (won’t have any Root Ports).              |
+| `DSW1 / DSW2` | VLAN 10 Forwarding         | `show spanning-tree vlan 10`                             | Ensure spanning-tree is forwarding on the correct ports.                        |
+| `DSW1`        | Hello Timer Propagation    | `show spanning-tree vlan 10 \| section Root ID`          | Ensure the Root Bridge has told everyone of the new Hello Timer.                |
+| `DSW2`        | VLAN 20 Path Selection     | `show spanning-tree detail \| section VLAN0020`          | Review the “Port path cost” and “Designated port id”.                           |
+| `DSW1 / DSW2` | Root Guard State           | `show spanning-tree inconsistentports`                   | Ensure Rootguard is triggered by a superior BPDUs received on downstream ports. |
+| `DSW1 / DSW2` | Root Guard Interface Check | `show spanning-tree interface GigabitEthernet0/2`        | Ensure Rootguard is triggered by a superior BPDUs received on downstream ports. |
+| `ASW1`        | PortFast Edge Type         | `show spanning-tree interface GigabitEthernet0/2`        | Ensure that the portfast enabled port shows as a “P2p Edge” type.               |
+| `ASW1`        | BPDU Receipt Check         | `show spanning-tree interface GigabitEthernet0/2 detail` | Ensure that the PC-facing edge port has not received any BPDUs.                 |
