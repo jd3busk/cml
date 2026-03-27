@@ -491,69 +491,22 @@ show spanning-tree interface GigabitEthernet0/3
 
 <br>
 
-## Verification
-
-<br>
-
-> **Note 1:** Verify root bridge placement, timers, and per-VLAN path selection after completing the configuration.
-
-> **Note 2:** Use the interface-specific spanning-tree checks to confirm Root Guard and PortFast behavior.
-
-<br>
-
-```text
-# DSW1
-show spanning-tree bridge protocol
-show spanning-tree root
-show spanning-tree vlan 10
-show spanning-tree vlan 10 | section Root ID
-show spanning-tree interface GigabitEthernet0/2
-show spanning-tree inconsistentports
-
-```
-
-<br>
-
-```text
-# DSW2
-show spanning-tree bridge protocol
-show spanning-tree root
-show spanning-tree detail | section VLAN0020
-show spanning-tree interface GigabitEthernet0/2
-
-```
-
-<br>
-
-```text
-# ASW1 / ASW2
-show interfaces status
-show interface GigabitEthernet0/1
-show interface GigabitEthernet0/1 switchport
-show spanning-tree interface GigabitEthernet0/2
-show spanning-tree interface GigabitEthernet0/2 detail
-
-```
-
-<br>
-
----
-
-<br>
-
 ## Troubleshooting
 
-| Device        | Check                      | Command                                                  | Purpose                                                                         |
-| ------------- | -------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `ASW1 / ASW2` | Port Status                | `show interfaces status`                                 | Ensure that the ports are not disabled.                                         |
-| `ASW1 / ASW2` | Interface Status           | `show interface GigabitEthernet0/1`                      | Ensure that the ports are not disabled.                                         |
-| `ASW1 / ASW2` | Switchport Mode            | `show interface GigabitEthernet0/1 switchport`           | Ensure the port is in the correct ‘operational mode’.                           |
-| `DSW1 / DSW2` | STP Protocol               | `show spanning-tree bridge protocol`                     | Ensure that the switch is running in RSTP mode for all VLANs.                   |
-| `DSW1 / DSW2` | Root Bridge                | `show spanning-tree root`                                | Ensure that the proper switch is ROOT (won’t have any Root Ports).              |
-| `DSW1 / DSW2` | VLAN 10 Forwarding         | `show spanning-tree vlan 10`                             | Ensure spanning-tree is forwarding on the correct ports.                        |
-| `DSW1`        | Hello Timer Propagation    | `show spanning-tree vlan 10 \| section Root ID`          | Ensure the Root Bridge has told everyone of the new Hello Timer.                |
-| `DSW2`        | VLAN 20 Path Selection     | `show spanning-tree detail \| section VLAN0020`          | Review the “Port path cost” and “Designated port id”.                           |
-| `DSW1 / DSW2` | Root Guard State           | `show spanning-tree inconsistentports`                   | Ensure Rootguard is triggered by a superior BPDUs received on downstream ports. |
-| `DSW1 / DSW2` | Root Guard Interface Check | `show spanning-tree interface GigabitEthernet0/2`        | Ensure Rootguard is triggered by a superior BPDUs received on downstream ports. |
-| `ASW1`        | PortFast Edge Type         | `show spanning-tree interface GigabitEthernet0/2`        | Ensure that the portfast enabled port shows as a “P2p Edge” type.               |
-| `ASW1`        | BPDU Receipt Check         | `show spanning-tree interface GigabitEthernet0/2 detail` | Ensure that the PC-facing edge port has not received any BPDUs.                 |
+| Device               | Check                         | Command                                                  | Purpose                                                                                              |
+| -------------------- | ----------------------------- | -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `DSW1 / DSW2`        | STP Bridge Status             | `show spanning-tree bridge`                              | Confirm spanning-tree is active and review bridge information during root and timer troubleshooting. |
+| `DSW1 / DSW2`        | Root Bridge                   | `show spanning-tree root`                                | Confirm the correct switch is acting as the root bridge.                                             |
+| `DSW1 / DSW2 / ASW1` | VLAN Forwarding State         | `show spanning-tree vlan 10`                             | Verify VLAN 10 root placement and forwarding/root-port behavior.                                     |
+| `ASW1`               | Hello Timer Verification      | `show spanning-tree vlan 10 detail`                      | Confirm the updated hello timer has propagated from the root bridge.                                 |
+| `ASW2`               | VLAN 20 Path Selection        | `show spanning-tree vlan 20 detail`                      | Review detailed STP information to confirm the preferred path toward the root for VLAN 20.           |
+| `ASW2`               | VLAN 40 Path Cost             | `show spanning-tree vlan 40 detail`                      | Review detailed STP information to confirm the preferred path toward the root for VLAN 40.           |
+| `DSW1 / DSW2`        | Trunk VLAN Allow List         | `show interfaces trunk`                                  | Verify the correct trunk links are active and carrying the intended VLANs.                           |
+| `ASW1 / ASW2`        | Port Status                   | `show interfaces status`                                 | Check whether interfaces are connected, disabled, or err-disabled.                                   |
+| `ASW1 / ASW2`        | Interface Status              | `show interface GigabitEthernet0/1`                      | Inspect physical and line protocol status on a switch uplink.                                        |
+| `ASW1 / ASW2`        | Switchport Mode               | `show interface GigabitEthernet0/1 switchport`           | Confirm the uplink is operating in the expected switchport mode.                                     |
+| `DSW1 / DSW2`        | Root Guard Interface State    | `show spanning-tree interface GigabitEthernet0/1`        | Verify Root Guard behavior on the access-switch-facing interface.                                    |
+| `DSW1 / DSW2`        | Root Guard Inconsistent Ports | `show spanning-tree inconsistentports`                   | Identify ports blocked because they received superior BPDUs.                                         |
+| `ASW1`               | Edge Port State               | `show spanning-tree interface GigabitEthernet0/2`        | Confirm the PortFast edge port transitioned properly and is forwarding.                              |
+| `ASW1`               | Edge Port BPDU Check          | `show spanning-tree interface GigabitEthernet0/2 detail` | Verify the PC-facing edge port has not received BPDUs.                                               |
+| `ASW1`               | BPDU Guard Err-Disable Check  | `show interface status err-disabled`                     | Confirm whether BPDU Guard has shut down an edge port after rogue-switch detection.                  |
