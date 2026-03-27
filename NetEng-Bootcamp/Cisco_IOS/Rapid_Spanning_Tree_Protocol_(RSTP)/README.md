@@ -38,7 +38,6 @@ end
 
 ```
 
-
 <br>
 
 #### Verify Rapid PVST is now operational
@@ -74,6 +73,15 @@ end
 
 <br>
 
+#### Verify DSW1 is root for VLAN 10
+```text
+# DSW1, DSW2, ASW1 & ASW2
+show spanning-tree vlan 10
+
+```
+
+<br>
+
 ### 3. Ensure DSW2 is the root bridge for VLAN 20, and DSW1 is its backup. (Use ‘spanning-tree root’)
 
 <br>
@@ -93,6 +101,15 @@ end
 configure terminal
 spanning-tree vlan 20 root secondary
 end
+
+```
+
+<br>
+
+#### Verify DSW2 is root for VLAN 20
+```text
+# DSW1, DSW2, ASW1 & ASW2
+show spanning-tree vlan 20
 
 ```
 
@@ -122,6 +139,15 @@ end
 
 <br>
 
+#### Verify DSW1 is root for VLAN 30
+```text
+# DSW1, DSW2, ASW1 & ASW2
+show spanning-tree vlan 30
+
+```
+
+<br>
+
 ### 5. Ensure SW4 is the root bridge for VLAN 40, and SW3 is its backup.
 
 <br>
@@ -146,6 +172,15 @@ end
 
 <br>
 
+#### Verify DSW2 is root for VLAN 40
+```text
+# DSW1, DSW2, ASW1 & ASW2
+show spanning-tree vlan 40
+
+```
+
+<br>
+
 ### 6. Ensure that VLAN 10’s hello timer is set to 4 seconds.
 
 <br>
@@ -155,6 +190,15 @@ end
 configure terminal
 spanning-tree vlan 10 hello-time 4
 end
+
+```
+
+<br>
+
+#### Verify VLAN 10's hello timer propogated
+```text
+# ASW1
+show spanning-tree vlan 10
 
 ```
 
@@ -170,6 +214,15 @@ configure terminal
 interface GigabitEthernet0/2
  spanning-tree vlan 20 port-priority 240
 end
+
+```
+
+<br>
+
+#### Verify ASW2's GigabitEthernet0/2 is preferred for VLAN 20
+```text
+# ASW2
+show spanning-tree vlan 20
 
 ```
 
