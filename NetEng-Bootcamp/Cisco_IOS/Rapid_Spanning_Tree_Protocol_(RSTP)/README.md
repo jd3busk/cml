@@ -189,6 +189,21 @@ show spanning-tree vlan 40 | section ID
 
 <br>
 
+#### Verify VLAN 10's hello timer is 2
+```text
+# ASW1
+show spanning-tree bridge
+show spanning-tree vlan 10 | section ID
+show spanning-tree vlan 10 detail | section Spanning Tree
+
+```
+
+<br>
+
+#### Configure VLAN 10's hello timer for 4 seconds
+
+<br>
+
 ```text
 # DSW1
 configure terminal
@@ -199,7 +214,7 @@ end
 
 <br>
 
-#### Verify VLAN 10's hello timer propogated
+#### Verify VLAN 10's new hello timer propagated
 ```text
 # ASW1
 show spanning-tree bridge
