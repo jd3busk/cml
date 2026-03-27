@@ -274,11 +274,12 @@ show spanning-tree vlan 40 detail | include VLAN0040|Port path cost
 
 <br>
 
+#### Now change ASW2's path cost to prefer GigabitEthernet0/2
 ```text
 # ASW2
 configure terminal
 interface GigabitEthernet0/2
- spanning-tree vlan 40 cost 3
+ spanning-tree vlan 40 cost 1
 end
 
 ```
