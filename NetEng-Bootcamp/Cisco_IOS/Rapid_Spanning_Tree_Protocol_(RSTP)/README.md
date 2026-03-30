@@ -524,7 +524,7 @@ interface GigabitEthernet0/3
  no shutdown
  end
 
-show spanning-tree interface GigabitEthernet0/3
+watch show spanning-tree interface GigabitEthernet0/3
 
 ```
 
@@ -550,7 +550,7 @@ end
 
 ```text
 # ASW1 & ASW2
-show spanning-tree interface GigabitEthernet0/3
+watch show spanning-tree interface GigabitEthernet0/3
 
 ```
 
