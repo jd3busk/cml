@@ -514,6 +514,23 @@ show spanning-tree inconsistentports
 
 <br>
 
+#### Verify forwarding state transition is slow
+
+```text
+# ASW1 & ASW2
+configure terminal
+interface GigabitEthernet0/3
+ shutdown
+ no shutdown
+ end
+
+show spanning-tree interface GigabitEthernet0/3
+
+```
+
+<br>
+
+
 #### Enable PortFast
 
 ```text
@@ -529,7 +546,7 @@ end
 
 <br>
 
-#### Verify forwarding state
+#### Verify forwarding state transition is faster
 
 ```text
 # ASW1 & ASW2
