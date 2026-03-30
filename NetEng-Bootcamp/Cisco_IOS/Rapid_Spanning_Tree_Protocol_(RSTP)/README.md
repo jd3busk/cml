@@ -469,17 +469,15 @@ show spanning-tree inconsistentports
 
 <br>
 
-### 12. Ensure ASW1's Edge Ports immediately transitions to the FWD state in VLAN 10
+### 12. Ensure ASW1 & ASW2's access ports immediately transition to FWD state
 
 <br>
 
 ```text
-# ASW1
+# ASW1 & ASW2
 configure terminal
-interface range GigabitEthernet0/2 - 3
- switchport
- switchport mode access
- switchport access vlan 10
+interface range GigabitEthernet0/3
+ shutdown
  spanning-tree portfast edge
  no shutdown
 end
@@ -487,10 +485,9 @@ end
 ```
 <br>
 
-#### Verify that ASW1's Gi0/2 and Gi0/3 ports transitioned to FWD state
+#### Verify that ASW1 & ASW2's ports immediately transtioned to FWD state
 ```text
-# ASW1
-show spanning-tree interface GigabitEthernet0/2
+# ASW1 & ASW2
 show spanning-tree interface GigabitEthernet0/3
 
 ```
@@ -502,9 +499,9 @@ show spanning-tree interface GigabitEthernet0/3
 <br>
 
 ```text
-# ASW1
+# ASW1 & ASW2
 configure terminal
-interface range GigabitEthernet0/2 - 3
+interface range GigabitEthernet0/3
  spanning-tree bpduguard enable
  no shutdown
 end
@@ -514,9 +511,8 @@ end
 
 #### Verify that BPDUGuard triggered on ASW1's Gi0/3 port
 ```text
-# ASW1
+# ASW1 & ASW2
 show interface status err-disabled
-show spanning-tree interface GigabitEthernet0/2
 show spanning-tree interface GigabitEthernet0/3
 
 ```
