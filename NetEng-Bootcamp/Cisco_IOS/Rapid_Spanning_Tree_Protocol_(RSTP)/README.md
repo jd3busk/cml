@@ -5,16 +5,18 @@
 ## Tasks
 
 > 1. Enable Rapid PVST+ on all switches
-> 2. Ensure DSW1 is the root bridge for VLAN 10, and DSW2 is its backup. (Use ‘spanning-tree root’)
-> 3. Ensure DSW2 is the root bridge for VLAN 20, and DSW1 is its backup. (Use ‘spanning-tree root’)
-> 4. Ensure DSW1 is the root bridge for VLAN 30, and DSW2 its backup. (Use ‘spanning-tree priority)
-> 5. Ensure SW4 is the root bridge for VLAN 40, and SW3 is its backup.
-> 6. Ensure that VLAN 10’s hello timer is set to 4 seconds.
-> 7. From DSW2, ensure ASW2's GigabitEthernet0/2 is used to reach the root bridge only for VLAN 20.
-> 8. From ASW2, ensure ASW2's GigabitEthernet0/2 is used to reach the root bridge for VLAN 40.
-> 9. Protect DSW1 & 2 from receiving any superior BPDUs from either access switch.
-> 10. From DSW1 & 2, only allow VLANs 10 & 30 toward ASW1 and VLANs 20 & 40 toward ASW2.
-> 11. Ensure PC-1's switchport immediately and safely transitions to the forwarding state.
+> 2. Set DSW1 as root bridge for VLAN 10 and DSW2 as backup
+> 3. Set DSW2 as root bridge for VLAN 20 and DSW1 as backup
+> 4. Set DSW1 as root bridge for VLAN 30 and DSW2 as backup
+> 5. Set DSW2 as root bridge for VLAN 40 and DSW1 as backup
+> 6. Set VLAN 10 hello timer to 4 seconds
+> 7. Prefer ASW2 Gi0/2 toward the root for VLAN 20
+> 8. Prefer ASW2 Gi0/2 toward the root for VLAN 40
+> 9. Allow only VLANs 10 and 30 toward ASW1
+> 10. Allow only VLANs 20 and 40 toward ASW2
+> 11. Protect DSW1 and DSW2 from superior BPDUs
+> 12. Enable PortFast on access ports
+> 13. Enable BPDU Guard on access ports
 
 <br>
 
@@ -26,21 +28,23 @@
 
 <br>
 
-### 1. Enable Rapid PVST+ on all switches
+### 1. Enable Rapid PVST+
 
 <br>
 
+#### Configure STP mode
 ```text
 # DSW1, DSW2, ASW1 & ASW2
 configure terminal
 spanning-tree mode rapid-pvst
 end
 
-```
+````
 
 <br>
 
-#### Verify Rapid PVST is now operational
+#### Verify STP mode
+
 ```text
 # DSW1, DSW2, ASW1 & ASW2
 show spanning-tree summary | include ^Switch is in
@@ -49,9 +53,11 @@ show spanning-tree summary | include ^Switch is in
 
 <br>
 
-### 2. Ensure DSW1 is the root bridge for VLAN 10, and DSW2 is its backup. (Use ‘spanning-tree root’)
+### 2. VLAN 10 Root and Backup
 
 <br>
+
+#### Set DSW1 as root
 
 ```text
 # DSW1
@@ -63,6 +69,8 @@ end
 
 <br>
 
+#### Set DSW2 as backup
+
 ```text
 # DSW2
 configure terminal
@@ -73,7 +81,8 @@ end
 
 <br>
 
-#### Verify DSW1 is root for VLAN 10
+#### Verify VLAN 10 root
+
 ```text
 # DSW1, DSW2 & ASW1
 show spanning-tree bridge
@@ -83,9 +92,11 @@ show spanning-tree vlan 10 | section ID
 
 <br>
 
-### 3. Ensure DSW2 is the root bridge for VLAN 20, and DSW1 is its backup. (Use ‘spanning-tree root’)
+### 3. VLAN 20 Root and Backup
 
 <br>
+
+#### Set DSW2 as root
 
 ```text
 # DSW2
@@ -97,6 +108,8 @@ end
 
 <br>
 
+#### Set DSW1 as backup
+
 ```text
 # DSW1
 configure terminal
@@ -107,7 +120,8 @@ end
 
 <br>
 
-#### Verify DSW2 is root for VLAN 20
+#### Verify VLAN 20 root
+
 ```text
 # DSW1, DSW2 & ASW2
 show spanning-tree bridge
@@ -117,9 +131,11 @@ show spanning-tree vlan 20 | section ID
 
 <br>
 
-### 4. Ensure DSW1 is the root bridge for VLAN 30, and DSW2 its backup. (Use ‘spanning-tree priority)
+### 4. VLAN 30 Root and Backup
 
 <br>
+
+#### Set DSW1 as root
 
 ```text
 # DSW1
@@ -131,6 +147,8 @@ end
 
 <br>
 
+#### Set DSW2 as backup
+
 ```text
 # DSW2
 configure terminal
@@ -141,7 +159,8 @@ end
 
 <br>
 
-#### Verify DSW1 is root for VLAN 30
+#### Verify VLAN 30 root
+
 ```text
 # DSW1, DSW2 & ASW1
 show spanning-tree bridge
@@ -151,9 +170,11 @@ show spanning-tree vlan 30 | section ID
 
 <br>
 
-### 5. Ensure SW4 is the root bridge for VLAN 40, and SW3 is its backup.
+### 5. VLAN 40 Root and Backup
 
 <br>
+
+#### Set DSW2 as root
 
 ```text
 # DSW2
@@ -165,6 +186,8 @@ end
 
 <br>
 
+#### Set DSW1 as backup
+
 ```text
 # DSW1
 configure terminal
@@ -175,7 +198,8 @@ end
 
 <br>
 
-#### Verify DSW2 is root for VLAN 40
+#### Verify VLAN 40 root
+
 ```text
 # DSW1, DSW2 & ASW2
 show spanning-tree bridge
@@ -185,11 +209,12 @@ show spanning-tree vlan 40 | section ID
 
 <br>
 
-### 6. Ensure that VLAN 10’s hello timer is set to 4 seconds.
+### 6. VLAN 10 Hello Timer
 
 <br>
 
-#### Verify VLAN 10's hello timer is 2
+#### Check current timer
+
 ```text
 # ASW1
 show spanning-tree bridge
@@ -200,9 +225,7 @@ show spanning-tree vlan 10 detail | section Spanning Tree
 
 <br>
 
-#### Configure VLAN 10's hello timer for 4 seconds
-
-<br>
+#### Set hello timer
 
 ```text
 # DSW1
@@ -214,7 +237,8 @@ end
 
 <br>
 
-#### Verify VLAN 10's new hello timer propagated
+#### Verify updated timer
+
 ```text
 # ASW1
 show spanning-tree bridge
@@ -225,11 +249,12 @@ show spanning-tree vlan 10 detail | section Spanning Tree
 
 <br>
 
-### 7. From DSW2, ensure ASW2's GigabitEthernet0/2 is used to reach the root bridge only for VLAN 20.
+### 7. VLAN 20 Preferred Uplink
 
 <br>
 
-#### Verify ASW2's GigabitEthernet0/1 is preferred for VLAN 20
+#### Check current root port
+
 ```text
 # ASW2
 show spanning-tree vlan 20
@@ -239,7 +264,8 @@ show spanning-tree vlan 20 detail | include VLAN0020|port id
 
 <br>
 
-#### Modify DSW2's GigabitEthernet0/2 so that it is the preferred uplink for VLAN 20
+#### Lower port priority on DSW2 Gi0/2
+
 ```text
 # DSW2
 configure terminal
@@ -251,7 +277,8 @@ end
 
 <br>
 
-#### Verify ASW2's GigabitEthernet0/2 is now preferred for VLAN 20
+#### Verify preferred uplink
+
 ```text
 # ASW2
 show spanning-tree vlan 20
@@ -261,11 +288,12 @@ show spanning-tree vlan 20 detail | include VLAN0020|port id
 
 <br>
 
-### 8. From ASW2, ensure ASW2's GigabitEthernet0/2 is used to reach the root bridge for VLAN 40.
+### 8. VLAN 40 Preferred Uplink
 
 <br>
 
-#### Verify ASW2's GigabitEthernet0/1 is preferred for VLAN 40
+#### Check current path cost
+
 ```text
 # ASW2
 show spanning-tree vlan 40
@@ -275,7 +303,8 @@ show spanning-tree vlan 40 detail | include VLAN0040|Port path cost
 
 <br>
 
-#### Now change ASW2's path cost to prefer GigabitEthernet0/2
+#### Lower path cost on ASW2 Gi0/2
+
 ```text
 # ASW2
 configure terminal
@@ -287,7 +316,8 @@ end
 
 <br>
 
-#### Verify ASW2's GigabitEthernet0/2 is now preferred for VLAN 40
+#### Verify preferred uplink
+
 ```text
 # ASW2
 show spanning-tree vlan 40
@@ -297,11 +327,12 @@ show spanning-tree vlan 40 detail | include VLAN0040|Port path cost
 
 <br>
 
-### 9. On DSW1 & DSW2, only allow VLANs 10 & 30 toward ASW1
+### 9. VLAN Allow List Toward ASW1
 
 <br>
 
-#### Check which VLANs are allowed on DSW and DSW2's Gi0/1 interfaces
+#### Check current trunk VLANs
+
 ```text
 # DSW1 & DSW2
 show spanning-tree interface GigabitEthernet0/1
@@ -311,7 +342,8 @@ show interfaces trunk | include Port|Gi0/1
 
 <br>
 
-#### Apply the VLAN 10,30 allow lists
+#### Allow VLANs 10 and 30
+
 ```text
 # DSW1 & DSW2
 configure terminal
@@ -323,7 +355,8 @@ end
 
 <br>
 
-#### Verify that only VLANs 10 & 30 are allowed toward ASW2
+#### Verify trunk VLANs
+
 ```text
 # DSW1 & DSW2
 show spanning-tree interface GigabitEthernet0/1
@@ -333,11 +366,12 @@ show interfaces trunk | include Port|Gi0/1
 
 <br>
 
-### 10. On DSW1 & DSW2, only allow VLANs 20 & 40 toward ASW2
+### 10. VLAN Allow List Toward ASW2
 
 <br>
 
-#### Check which VLANs are allowed on DSW and DSW2's Gi0/2 & 3 interfaces
+#### Check current trunk VLANs
+
 ```text
 # DSW1
 show spanning-tree interface GigabitEthernet0/2
@@ -357,7 +391,8 @@ show interfaces trunk | include Port|Gi0/2|Gi0/3
 
 <br>
 
-#### Apply the VLAN 20,40 allow lists
+#### Allow VLANs 20 and 40
+
 ```text
 # DSW1
 configure terminal
@@ -380,7 +415,8 @@ end
 
 <br>
 
-#### Verify that only VLANs 20 & 40 are allowed toward ASW2
+#### Verify trunk VLANs
+
 ```text
 # DSW1
 show spanning-tree interface GigabitEthernet0/2
@@ -400,9 +436,11 @@ show interfaces trunk | include Port|Gi0/2|Gi0/3
 
 <br>
 
-### 11. Protect DSW1 & 2 from receiving any superior BPDUs from either access switch.
+### 11. Root Guard on Distribution Switches
 
 <br>
+
+#### Enable Root Guard on DSW1
 
 ```text
 # DSW1
@@ -415,6 +453,8 @@ end
 
 <br>
 
+#### Enable Root Guard on DSW2
+
 ```text
 # DSW2
 configure terminal
@@ -426,9 +466,8 @@ end
 
 <br>
 
-<br>
+#### Verify Root Guard
 
-#### Verify that Root Guard is enabled
 ```text
 # DSW1
 show spanning-tree interface Gi0/1 detail | include VLAN|Root guard
@@ -448,7 +487,8 @@ show spanning-tree interface Gi0/3 detail | include VLAN|Root guard
 
 <br>
 
-#### Test DSW1 & DSW2's Root Guard configuration by setting ASW1 as VLAN 30's root
+#### Trigger Root Guard
+
 ```text
 # ASW1
 configure terminal
@@ -459,7 +499,8 @@ end
 
 <br>
 
-#### Verify that Root Guard was triggered on DSW1 and DSW2 for VLAN 30
+#### Verify inconsistent ports
+
 ```text
 # DSW1 & DSW2
 show spanning-tree interface GigabitEthernet0/1
@@ -469,23 +510,27 @@ show spanning-tree inconsistentports
 
 <br>
 
-### 12. Ensure ASW1 & ASW2's access ports immediately transition to FWD state
+### 12. PortFast on Access Ports
 
 <br>
+
+#### Enable PortFast
 
 ```text
 # ASW1 & ASW2
 configure terminal
-interface range GigabitEthernet0/3
+interface GigabitEthernet0/3
  shutdown
  spanning-tree portfast edge
  no shutdown
 end
 
 ```
+
 <br>
 
-#### Verify that ASW1 & ASW2's ports immediately transtioned to FWD state
+#### Verify forwarding state
+
 ```text
 # ASW1 & ASW2
 show spanning-tree interface GigabitEthernet0/3
@@ -494,22 +539,26 @@ show spanning-tree interface GigabitEthernet0/3
 
 <br>
 
-### 13. Prevent ROGUE access switches from connecting to the network
+### 13. BPDU Guard on Access Ports
 
 <br>
+
+#### Enable BPDU Guard
 
 ```text
 # ASW1 & ASW2
 configure terminal
-interface range GigabitEthernet0/3
+interface GigabitEthernet0/3
  spanning-tree bpduguard enable
  no shutdown
 end
 
 ```
+
 <br>
 
-#### Verify that BPDUGuard triggered on ASW1's Gi0/3 port
+#### Verify err-disabled state
+
 ```text
 # ASW1 & ASW2
 show interface status err-disabled
@@ -525,20 +574,20 @@ show spanning-tree interface GigabitEthernet0/3
 
 ## Troubleshooting
 
-| Device               | Check                         | Command                                                  | Purpose                                                                                              |
-| -------------------- | ----------------------------- | -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `DSW1 / DSW2`        | STP Bridge Status             | `show spanning-tree bridge`                              | Confirm spanning-tree is active and review bridge information during root and timer troubleshooting. |
-| `DSW1 / DSW2`        | Root Bridge                   | `show spanning-tree root`                                | Confirm the correct switch is acting as the root bridge.                                             |
-| `DSW1 / DSW2 / ASW1` | VLAN Forwarding State         | `show spanning-tree vlan 10`                             | Verify VLAN 10 root placement and forwarding/root-port behavior.                                     |
-| `ASW1`               | Hello Timer Verification      | `show spanning-tree vlan 10 detail`                      | Confirm the updated hello timer has propagated from the root bridge.                                 |
-| `ASW2`               | VLAN 20 Path Selection        | `show spanning-tree vlan 20 detail`                      | Review detailed STP information to confirm the preferred path toward the root for VLAN 20.           |
-| `ASW2`               | VLAN 40 Path Cost             | `show spanning-tree vlan 40 detail`                      | Review detailed STP information to confirm the preferred path toward the root for VLAN 40.           |
-| `DSW1 / DSW2`        | Trunk VLAN Allow List         | `show interfaces trunk`                                  | Verify the correct trunk links are active and carrying the intended VLANs.                           |
-| `ASW1 / ASW2`        | Port Status                   | `show interfaces status`                                 | Check whether interfaces are connected, disabled, or err-disabled.                                   |
-| `ASW1 / ASW2`        | Interface Status              | `show interface GigabitEthernet0/1`                      | Inspect physical and line protocol status on a switch uplink.                                        |
-| `ASW1 / ASW2`        | Switchport Mode               | `show interface GigabitEthernet0/1 switchport`           | Confirm the uplink is operating in the expected switchport mode.                                     |
-| `DSW1 / DSW2`        | Root Guard Interface State    | `show spanning-tree interface GigabitEthernet0/1`        | Verify Root Guard behavior on the access-switch-facing interface.                                    |
-| `DSW1 / DSW2`        | Root Guard Inconsistent Ports | `show spanning-tree inconsistentports`                   | Identify ports blocked because they received superior BPDUs.                                         |
-| `ASW1`               | Edge Port State               | `show spanning-tree interface GigabitEthernet0/2`        | Confirm the PortFast edge port transitioned properly and is forwarding.                              |
-| `ASW1`               | Edge Port BPDU Check          | `show spanning-tree interface GigabitEthernet0/2 detail` | Verify the PC-facing edge port has not received BPDUs.                                               |
-| `ASW1`               | BPDU Guard Err-Disable Check  | `show interface status err-disabled`                     | Confirm whether BPDU Guard has shut down an edge port after rogue-switch detection.                  |
+| Device               | Check                         | Command                                                  | Purpose                                          |
+| -------------------- | ----------------------------- | -------------------------------------------------------- | ------------------------------------------------ |
+| `DSW1 / DSW2`        | STP Bridge Status             | `show spanning-tree bridge`                              | Review bridge ID, root ID, and STP operation     |
+| `DSW1 / DSW2`        | Root Bridge                   | `show spanning-tree root`                                | Confirm the active root per VLAN                 |
+| `DSW1 / DSW2 / ASW1` | VLAN 10 STP State             | `show spanning-tree vlan 10`                             | Verify VLAN 10 root and port roles               |
+| `ASW1`               | VLAN 10 Hello Timer           | `show spanning-tree vlan 10 detail`                      | Confirm hello timer propagation                  |
+| `ASW2`               | VLAN 20 Path Selection        | `show spanning-tree vlan 20 detail`                      | Check root-port selection for VLAN 20            |
+| `ASW2`               | VLAN 40 Path Selection        | `show spanning-tree vlan 40 detail`                      | Check root-port selection for VLAN 40            |
+| `DSW1 / DSW2`        | Trunk VLAN Allow List         | `show interfaces trunk`                                  | Verify allowed VLANs on trunks                   |
+| `ASW1 / ASW2`        | Interface Status              | `show interfaces status`                                 | Check connected, disabled, or err-disabled ports |
+| `ASW1 / ASW2`        | Uplink Interface State        | `show interface GigabitEthernet0/1`                      | Review physical and line protocol state          |
+| `ASW1 / ASW2`        | Uplink Switchport Mode        | `show interface GigabitEthernet0/1 switchport`           | Confirm switchport mode and trunking state       |
+| `DSW1 / DSW2`        | Root Guard State              | `show spanning-tree interface GigabitEthernet0/1`        | Verify Root Guard on access-facing trunks        |
+| `DSW1 / DSW2`        | Root Guard Inconsistent Ports | `show spanning-tree inconsistentports`                   | Identify ports blocked by superior BPDUs         |
+| `ASW1 / ASW2`        | Access Port State             | `show spanning-tree interface GigabitEthernet0/3`        | Confirm PortFast forwarding state                |
+| `ASW1 / ASW2`        | Access Port Detail            | `show spanning-tree interface GigabitEthernet0/3 detail` | Check BPDU activity and edge-port status         |
+| `ASW1 / ASW2`        | BPDU Guard Err-Disable        | `show interface status err-disabled`                     | Confirm BPDU Guard shutdown after rogue BPDU     |
