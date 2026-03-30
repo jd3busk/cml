@@ -239,6 +239,7 @@ show spanning-tree vlan 20 detail | include VLAN0020|port id
 
 <br>
 
+#### Modify DSW2's GigabitEthernet0/2 so that it is the preferred uplink for VLAN 20
 ```text
 # DSW2
 configure terminal
@@ -300,6 +301,17 @@ show spanning-tree vlan 40 detail | include VLAN0040|Port path cost
 
 <br>
 
+#### Check which VLANs are allowed on DSW and DSW2's Gi0/1 interfaces
+```text
+# DSW1 & DSW2
+show spanning-tree interface GigabitEthernet0/1
+show interfaces trunk | include Port|Gi0/1
+
+```
+
+<br>
+
+#### Apply the VLAN 10,30 allow lists
 ```text
 # DSW1 & DSW2
 configure terminal
@@ -325,6 +337,27 @@ show interfaces trunk | include Port|Gi0/1
 
 <br>
 
+#### Check which VLANs are allowed on DSW and DSW2's Gi0/2 & 3 interfaces
+```text
+# DSW1
+show spanning-tree interface GigabitEthernet0/2
+show interfaces trunk | include Port|Gi0/2
+
+```
+
+<br>
+
+```text
+# DSW2
+show spanning-tree interface GigabitEthernet0/2
+show spanning-tree interface GigabitEthernet0/3
+show interfaces trunk | include Port|Gi0/2|Gi0/3
+
+```
+
+<br>
+
+#### Apply the VLAN 20,40 allow lists
 ```text
 # DSW1
 configure terminal
@@ -415,18 +448,18 @@ show spanning-tree interface Gi0/3 detail | include VLAN|Root guard
 
 <br>
 
-#### Test DSW1 & DSW2's Root Guard configuration by setting ASW1 as VLAN 10's root
+#### Test DSW1 & DSW2's Root Guard configuration by setting ASW1 as VLAN 30's root
 ```text
 # ASW1
 configure terminal
-spanning-tree vlan 10 priority 0
+spanning-tree vlan 30 priority 0
 end
 
 ```
 
 <br>
 
-#### Verify that Root Guard was triggered on DSW1 and DSW2 for VLAN 10
+#### Verify that Root Guard was triggered on DSW1 and DSW2 for VLAN 30
 ```text
 # DSW1 & DSW2
 show spanning-tree interface GigabitEthernet0/1
@@ -436,7 +469,7 @@ show spanning-tree inconsistentports
 
 <br>
 
-### 12. Ensure ASW1's Edge Ports immediately transitions to the forwarding state.
+### 12. Ensure ASW1's Edge Ports immediately transitions to the FWD state in VLAN 10
 
 <br>
 
@@ -444,6 +477,9 @@ show spanning-tree inconsistentports
 # ASW1
 configure terminal
 interface range GigabitEthernet0/2 - 3
+ switchport
+ switchport mode access
+ switchport access vlan 10
  spanning-tree portfast edge
  no shutdown
 end
