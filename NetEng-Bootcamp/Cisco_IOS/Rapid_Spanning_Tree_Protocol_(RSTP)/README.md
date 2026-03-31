@@ -550,7 +550,7 @@ end
 
 ```text
 # ASW1 & ASW2
-watch show spanning-tree interface GigabitEthernet0/3
+show spanning-tree interface GigabitEthernet0/3
 
 ```
 
